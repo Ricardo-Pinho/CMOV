@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.feup.apm.restclinic;
+package org.feup.cmov.bus;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,7 +33,7 @@ public class DocResource {
         
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            String url = "jdbc:derby://localhost:1527/ClinicData";
+            String url = "jdbc:derby://localhost:1527/BusDB";
             Connection conn = DriverManager.getConnection(url,"test","test");
             Statement stmt = conn.createStatement();
             
@@ -59,7 +59,7 @@ public class DocResource {
         int index = 0;
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            String url = "jdbc:derby://localhost:1527/ClinicData";
+            String url = "jdbc:derby://localhost:1527/BusDB";
             Connection conn = DriverManager.getConnection(url,"test","test");
             Statement stmt = conn.createStatement();
             

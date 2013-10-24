@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.feup.apm.restclinic;
+package org.feup.cmov.bus;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

@@ -7,11 +7,8 @@ package org.netbeans.rest.application.config;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
-/**
- *
- * @author apm
- */
-@javax.ws.rs.ApplicationPath("Doctors")
+
+@javax.ws.rs.ApplicationPath("BusServer")
 public class ApplicationConfig extends Application {
 
     public Set<Class<?>> getClasses() {
@@ -23,7 +20,8 @@ public class ApplicationConfig extends Application {
      */
     private Set<Class<?>> getRestResourceClasses() {
         Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
-        resources.add(org.feup.apm.restclinic.DocResource.class);
+        resources.add(org.feup.cmov.bus.DocResource.class);
+        resources.add(org.feup.cmov.bus.UserResource.class);
         return resources;
     }
     
