@@ -19,7 +19,7 @@ public class User {
     public String Name, Username, Password, CcardType, CcardValidation;
     public HashMap<Integer,ArrayList<Ticket>> tickets = new HashMap();
     
-     public User() {
+    public User() {
     }
      
      public User(String err) {

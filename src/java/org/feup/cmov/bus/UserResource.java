@@ -73,9 +73,10 @@ public class UserResource {
             stmt.executeUpdate(query);
             conn.close();
         } catch (Exception e){
-            System.out.println(e.getMessage());  // to the app server log
+            return "error";
         }
-        return new Integer(index).toString();
+        System.out.println("ok");
+        return "ok";
     }
    
     @Path("Login")
@@ -84,22 +85,22 @@ public class UserResource {
     @Consumes("application/json")
     public String Login(User usr) {
             String Response="";
+            int index = 0;
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             String url = "jdbc:derby://localhost:1527/BusDB";
             Connection conn = DriverManager.getConnection(url,"test","test");
             Statement stmt = conn.createStatement();
             String query = "SELECT * FROM APP.Users WHERE Username ='"+usr.Username+"' AND Password ='"+usr.encryptPassword(usr.Password)+"'";
-            System.out.println("breaks");
             ResultSet rs = stmt.executeQuery(query);
-            System.out.println("here");
             if (rs.next()) {
                 System.out.println("I found it");
-                Response="I found it";
+                index = rs.getInt(1);
+                Response = new Integer(index).toString();
             }
             else{
-                System.out.println("Shit");
-                Response="Shit";
+                System.out.println("Wrong Login");
+                Response="-2";
             }
             //query = "INSERT INTO APP.Users VALUES(" + index + ", '" + usr.Name + "', '" + usr.Username + "', '" + usr.encryptPassword(usr.Password) + "', '" + usr.CcardType+ "', " + usr.CcardNumber + ", '" + usr.CcardValidation+"')";
             //stmt.executeUpdate(query);
