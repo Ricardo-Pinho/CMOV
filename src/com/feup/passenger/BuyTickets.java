@@ -83,10 +83,10 @@ public class BuyTickets extends Activity implements NumberPicker.OnValueChangeLi
 	        switch(picker.getId()) {
 		        case 1:
 		        {
-		        	if(oldVal==0 && newVal==99)
-		        		totalValue=totalValue+pricet1*99;
-		        	else if(oldVal==99 && newVal==0)
-		        		totalValue=totalValue-pricet1*99;
+		        	if(oldVal==0 && newVal==10)
+		        		totalValue=totalValue+pricet1*10;
+		        	else if(oldVal==10 && newVal==0)
+		        		totalValue=totalValue-pricet1*10;
 		        	else if(oldVal<newVal)
 		        		totalValue=totalValue+pricet1;
 		        	else
@@ -95,10 +95,10 @@ public class BuyTickets extends Activity implements NumberPicker.OnValueChangeLi
 		        	break;
 		        case 2:
 		        {
-		        	if(oldVal==0 && newVal==99)
-		        		totalValue=totalValue+pricet2*99;
-		        	else if(oldVal==99 && newVal==0)
-		        		totalValue=totalValue-pricet2*99;
+		        	if(oldVal==0 && newVal==10)
+		        		totalValue=totalValue+pricet2*10;
+		        	else if(oldVal==10 && newVal==0)
+		        		totalValue=totalValue-pricet2*10;
 		        	else if(oldVal<newVal)
 		        		totalValue=totalValue+pricet2;
 		        	else
@@ -107,10 +107,10 @@ public class BuyTickets extends Activity implements NumberPicker.OnValueChangeLi
 		        	break;
 		        case 3:
 		        {
-		        	if(oldVal==0 && newVal==99)
-		        		totalValue=totalValue+pricet3*99;
-		        	else if(oldVal==99 && newVal==0)
-		        		totalValue=totalValue-pricet3*99;
+		        	if(oldVal==0 && newVal==10)
+		        		totalValue=totalValue+pricet3*10;
+		        	else if(oldVal==10 && newVal==0)
+		        		totalValue=totalValue-pricet3*10;
 		        	else if(oldVal<newVal)
 		        		totalValue=totalValue+pricet3;
 		        	else

@@ -129,7 +129,7 @@ public class Register extends Activity {
 						        try {
 						          // RESTful URL for POST
 						          String link = MainActivity.serverip+"Users";
-						          URL url = new URL("http://192.168.1.69:8080/Server/BusServer/Users");
+						          URL url = new URL(MainActivity.serverip+"Users");
 
 						          con = (HttpURLConnection) url.openConnection();
 						          con.setReadTimeout(10000);      
