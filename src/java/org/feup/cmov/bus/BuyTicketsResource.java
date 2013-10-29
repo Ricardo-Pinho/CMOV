@@ -46,7 +46,6 @@ public class BuyTicketsResource {
                 query = "INSERT INTO APP.Tickets VALUES(" + index + ", 'T1' )";
                 stmt.executeUpdate(query);
                 
-                //System.out.println("Ticket Inserted");
                 
                 query = "SELECT MAX(Id) FROM APP.USERTICKETS";
                 rs = stmt.executeQuery(query);
@@ -57,7 +56,6 @@ public class BuyTicketsResource {
                 
                 query = "INSERT INTO APP.USERTICKETS VALUES(" + UserTicketIndex + ", "+ticket.ID+", "+index+", 0 )";
                 stmt.executeUpdate(query);
-                //System.out.println("Ticket User Inserted");
                 
             }
             

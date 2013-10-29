@@ -20,9 +20,11 @@ public class ApplicationConfig extends Application {
      */
     private Set<Class<?>> getRestResourceClasses() {
         Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
+        resources.add(org.feup.cmov.bus.AvailableTicketsResource.class);
         resources.add(org.feup.cmov.bus.BuyTicketsResource.class);
         resources.add(org.feup.cmov.bus.DocResource.class);
         resources.add(org.feup.cmov.bus.PurchaseHistoryResource.class);
+        resources.add(org.feup.cmov.bus.TicketHistoryResource.class);
         resources.add(org.feup.cmov.bus.TicketResource.class);
         resources.add(org.feup.cmov.bus.UserResource.class);
         return resources;
