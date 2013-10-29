@@ -177,6 +177,7 @@ public class BuyTickets extends Activity implements NumberPicker.OnValueChangeLi
 						          reader.close();
 						        }
 						        catch (IOException e) {
+						        	return null;
 						        }
 						        finally {
 						          if (con != null)
@@ -186,8 +187,7 @@ public class BuyTickets extends Activity implements NumberPicker.OnValueChangeLi
 						        response=Integer.valueOf(p);
 								Thread.sleep(1000);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								return null;
 							}
 							return null;
 						}

@@ -49,7 +49,7 @@ public class PurchaseHistory extends Activity {
 				@Override
 				protected void onPreExecute() {
 					pd = new ProgressDialog(context);
-					pd.setTitle("Getting Tickets");
+					pd.setTitle("Getting History");
 					pd.setMessage("Please wait.");
 					pd.setCancelable(false);
 					pd.setIndeterminate(true);
@@ -80,6 +80,7 @@ public class PurchaseHistory extends Activity {
 				          payload = reader.readLine();
 				          reader.close();
 				          } catch (IOException e) {
+				        	  return null;
 				        } finally {
 				          if (con != null)
 				            con.disconnect();
@@ -95,7 +96,7 @@ public class PurchaseHistory extends Activity {
 				            response=1;
 				          }
 				          catch (JSONException e) {
-				            
+				        	  return null;
 				          }
 				        final String p = payload;
 						Thread.sleep(1000);

@@ -37,15 +37,15 @@ import android.widget.TextView;
 public class AvailableTickets extends Activity {
 	
 		private ProgressDialog pd;
-		private TableLayout tb;
+		private TableRow tr;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.purchase_history);
+			setContentView(R.layout.available_tickets);
 			final Context context = this;
 				AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 				int response=-1;
-				JSONArray arrayResponse;
+				String StringResponse="";
 				@Override
 				protected void onPreExecute() {
 					pd = new ProgressDialog(context);
@@ -64,7 +64,7 @@ public class AvailableTickets extends Activity {
 				        try {
 
 				          // Build RESTful query (GET)
-				          URL url = new URL(MainActivity.serverip+"PurchaseHistory/" + MainActivity.Id);
+				          URL url = new URL(MainActivity.serverip+"AvailableTickets/" + MainActivity.Id);
 
 				          con = (HttpURLConnection) url.openConnection();
 				          con.setReadTimeout(10000);
@@ -80,28 +80,24 @@ public class AvailableTickets extends Activity {
 				          payload = reader.readLine();
 				          reader.close();
 				          } catch (IOException e) {
+				        	  return null;
 				        } finally {
 				          if (con != null)
 				            con.disconnect();
 				        }
 				        if (payload != "Error")
 				          try {
-				            JSONObject jsonObject = new JSONObject(payload);
-				            TextView t2 = (TextView)findViewById(R.id.textView2);
-				            TextView t3 = (TextView)findViewById(R.id.textView3);				            
-				            arrayResponse = jsonObject.getJSONArray("Purchase");
-				            //t2.setText(jsonObject.toString());
-				            //t3.setText(result.get(1).toString());
+				            JSONObject jsonObject = new JSONObject(payload);				            
+				            StringResponse = jsonObject.getString("Tickets");
 				            response=1;
 				          }
 				          catch (JSONException e) {
-				            
+				        	  return null;
 				          }
 				        final String p = payload;
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						return null;
 					}
 					return null;
 				}
@@ -126,7 +122,7 @@ public class AvailableTickets extends Activity {
 										.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
 											public void onClick(DialogInterface dialog,int id) {
 												dialog.cancel();
-												PurchaseHistory.this.finish();
+												AvailableTickets.this.finish();
 											    overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
 											}
 										  });
@@ -140,37 +136,31 @@ public class AvailableTickets extends Activity {
 								break;
 							default:
 							{
-								tb = (TableLayout)findViewById(R.id.TableLayout);
-								for(int i=0; i<arrayResponse.length();i++)
-								{
-									LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+								tr = (TableRow)findViewById(R.id.tableRow2);
 									
 									LayoutParams tp = new LayoutParams(0,LayoutParams.WRAP_CONTENT);
 									tp.weight=1;
 									
-									TableRow tr = new TableRow(PurchaseHistory.this);
-									tr.setLayoutParams(lp);
 									String [] trunc = null;
-									try {
-										trunc = arrayResponse.get(i).toString().split(";");
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-									TextView date = new TextView(PurchaseHistory.this);
-									date.setLayoutParams(tp);
-									date.setTextColor(Color.WHITE);
-									date.setGravity(Gravity.CENTER);
-							        date.setText(trunc[1]);
-							        TextView value = new TextView(PurchaseHistory.this);
-							        value.setLayoutParams(tp);
-							        value.setTextColor(Color.WHITE);
-							        value.setGravity(Gravity.CENTER);
-							        value.setText(trunc[0]+"0 €");
-									tr.addView(date);
-									tr.addView(value);
-									tb.addView(tr, i+1);
-								}
+									trunc = StringResponse.split(";");
+									TextView T1 = new TextView(AvailableTickets.this);
+									T1.setLayoutParams(tp);
+									T1.setTextColor(Color.WHITE);
+									T1.setGravity(Gravity.CENTER);
+							        T1.setText(trunc[0]);
+							        TextView T2 = new TextView(AvailableTickets.this);
+							        T2.setLayoutParams(tp);
+							        T2.setTextColor(Color.WHITE);
+							        T2.setGravity(Gravity.CENTER);
+							        T2.setText(trunc[1]);
+							        TextView T3 = new TextView(AvailableTickets.this);
+							        T3.setLayoutParams(tp);
+							        T3.setTextColor(Color.WHITE);
+							        T3.setGravity(Gravity.CENTER);
+							        T3.setText(trunc[2]);
+									tr.addView(T1);
+									tr.addView(T2);
+									tr.addView(T3);
 							}
 								break;
 

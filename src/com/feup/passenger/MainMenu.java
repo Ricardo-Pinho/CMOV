@@ -27,6 +27,7 @@ public class MainMenu extends Activity {
 	private Button button3;
 	private Button button4;
 	private Button button5;
+	private Button button6;
 	//test
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class MainMenu extends Activity {
 			addListenerOnButton3();
 			addListenerOnButton4();
 			addListenerOnButton5();
+			addListenerOnButton6();
 		}
 
 		@Override
@@ -129,7 +131,7 @@ public class MainMenu extends Activity {
 				@Override
 				public void onClick(View arg0) {
 	 
-				    Intent intent = new Intent(context, Register.class);
+				    Intent intent = new Intent(context, TicketHistory.class);
 	                startActivity(intent);
 	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
 	 
@@ -150,7 +152,28 @@ public class MainMenu extends Activity {
 				@Override
 				public void onClick(View arg0) {
 	 
-				    Intent intent = new Intent(context, Register.class);
+				    Intent intent = new Intent(context, AvailableTickets.class);
+	                startActivity(intent);
+	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
+	 
+				}
+	 
+			});
+	 
+		}
+		
+		public void addListenerOnButton6() {
+			 
+			final Context context = this;
+	 
+			button6 = (Button) findViewById(R.id.button6);
+	 
+			button6.setOnClickListener(new OnClickListener() {
+	 
+				@Override
+				public void onClick(View arg0) {
+	 
+				    Intent intent = new Intent(context, AvailableTickets.class);
 	                startActivity(intent);
 	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
 	 

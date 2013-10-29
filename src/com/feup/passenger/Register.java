@@ -149,6 +149,7 @@ public class Register extends Activity {
 						          reader.close();
 						        }
 						        catch (IOException e) {
+						        	return null;
 						        }
 						        finally {
 						          if (con != null)
@@ -160,7 +161,7 @@ public class Register extends Activity {
 								Thread.sleep(1000);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
-								e.printStackTrace();
+								return null;
 							}
 							return null;
 						}
