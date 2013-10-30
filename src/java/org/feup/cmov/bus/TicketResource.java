@@ -4,10 +4,14 @@
  */
 package org.feup.cmov.bus;
 
+import static com.sun.xml.bind.util.CalendarConv.formatter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,12 +24,11 @@ import javax.ws.rs.Produces;
 public class TicketResource {
     public TicketResource() {
     }
-
-    /*@GET
-    @Path("{id}")
+    @GET
+    @Path("GetTickets/{key}")
     @Produces("application/json")
-    public User getUser(@PathParam("id") String id) {
-        User usr = new User("Error");
+    public Tickets getUnvalidatedTickets(@PathParam("key") String key) {
+        Tickets tickets = new Tickets();
         
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -33,49 +36,56 @@ public class TicketResource {
             Connection conn = DriverManager.getConnection(url,"test","test");
             Statement stmt = conn.createStatement();
             
-            String query = "SELECT * FROM APP.Users WHERE Id = " + id;
+            String query = "SELECT * FROM APP.TICKETS, APP.USERTICKETS WHERE APP.Tickets.ID=APP.USERTICKETS.TICKETID AND APP.USERTICKETS.STATUS=0";
             ResultSet rs = stmt.executeQuery(query);
 
-            if ( rs.next() ) {
-                String name = rs.getString("Name");
-                String username = rs.getString("Username");
-                String password = rs.getString("Password");
-                int cardNo = rs.getInt("CcardNumber");
-                String cardType = rs.getString("CcardType");
-                String cardValid = rs.getString("CcardValidation");
-                usr = new User(name, username, password, cardType, cardNo, cardValid);
+            while ( rs.next() ) {
+                Ticket newTicket = new Ticket(rs.getInt("APP.TICKETID"), rs.getString("TYPE"), rs.getInt("USERID"));
+                tickets.Tickets.add(newTicket);
+                System.out.println(newTicket.Id);
             }
             conn.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());  // to the app server log
+            System.out.println("Error Man:" + e.getMessage());  // to the app server log
         }
-        System.out.println(usr.Name);
-        return usr;
-    }*/
+        System.out.println("ok");
+        return tickets;
+    }
     
-    /*@POST
-    @Produces("text/plain")
-    @Consumes("application/json")
-    public String addUser(User usr) {
-        int index = 0;
-        System.out.println("ola");
+    @GET
+    @Path("GetValidTickets/{key}")
+    @Produces("application/json")
+    public Tickets getValidatedTickets(@PathParam("key") String key) {
+        Tickets tickets = new Tickets();
+        
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             String url = "jdbc:derby://localhost:1527/BusDB";
             Connection conn = DriverManager.getConnection(url,"test","test");
             Statement stmt = conn.createStatement();
-            String query = "SELECT MAX(Id) FROM APP.Users";
+            
+            Calendar currentDate = Calendar.getInstance(); //Get the current date
+            currentDate.add(Calendar.HOUR_OF_DAY, -1);
+            currentDate.add(Calendar.MINUTE, -30);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
+            System.out.println(format.format(currentDate.getTime()));
+            
+            String query = "SELECT * FROM APP.TICKETS, APP.USERTICKETS, APP.BUSTICKET WHERE APP.TICKETS.ID=APP.USERTICKETS.TICKETID AND APP.TICKETS.ID=APP.USERTICKETS.TICKETID AND APP.USERTICKETS.TICKETID=APP.BUSTICKET.TICKETID AND APP.BUSTICKET.VALIDATIONDATE >= '"+format.format(currentDate.getTime())+"' AND APP.USERTICKETS.STATUS=1";
             ResultSet rs = stmt.executeQuery(query);
-            if (rs.next()) {
-                index = rs.getInt(1) + 1;
+            while ( rs.next() ) {
+                String date= rs.getString("VALIDATIONDATE");
+                date = date.substring(0,date.length()-5);
+                Ticket newTicket = new Ticket(rs.getInt("TICKETID"), rs.getInt("BUSID"), date, rs.getString("TYPE"), rs.getInt("USERID"));
+                tickets.Tickets.add(newTicket);
+                System.out.println(newTicket.Id);
             }
-            query = "INSERT INTO APP.Users VALUES(" + index + ", '" + usr.Name + "', '" + usr.Username + "', '" + usr.CcardType+ "', " + usr.CcardNumber + ", '" + usr.CcardValidation+ "', '" + usr.encryptPassword(usr.Password) +"')";
-            stmt.executeUpdate(query);
             conn.close();
-        } catch (Exception e){
-            return "error";
+        } catch (Exception e) {
+            System.out.println("Error Man:" + e.getMessage());  // to the app server log
         }
         System.out.println("ok");
-        return "ok";
-    }*/
+        return tickets;
+    }
+    
+    
 }
