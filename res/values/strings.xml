@@ -4,5 +4,7 @@
     <string name="app_name">Validator</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <color name="green">#9FEE00</color>
+    <color name="white">#FFFFFF</color>
 
 </resources>
