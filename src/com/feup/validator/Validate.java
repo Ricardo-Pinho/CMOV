@@ -57,7 +57,7 @@ public class Validate extends Activity {
 			if (scanResult != null) {
 			      String aux = scanResult.getContents();
 			      UserId = aux.substring(0, aux.indexOf(' '));
-			      Type = aux.substring(aux.indexOf(' ')+1);
+			      Type = "T" + aux.substring(aux.indexOf(' ')+1);
 			}
 		}
 		
