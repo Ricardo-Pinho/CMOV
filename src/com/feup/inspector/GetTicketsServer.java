@@ -81,7 +81,6 @@ public class GetTicketsServer extends Activity {
 				          payload = reader.readLine();
 				          reader.close();
 				          } catch (IOException e) {
-				        	  Log.d("filter", "shit1");
 				        	  return null;
 				        } finally {
 				          if (con != null)
@@ -94,7 +93,6 @@ public class GetTicketsServer extends Activity {
 				            response=1;
 				          }
 				          catch (JSONException e) {
-				        	  Log.d("filter", "shit1");
 				        	  return null;
 				          }
 				        final String p = payload;
