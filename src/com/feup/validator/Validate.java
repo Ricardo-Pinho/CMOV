@@ -12,6 +12,9 @@ import java.util.TimerTask;
 
 import com.feup.validator.MainActivity;
 import com.feup.validator.R;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,15 +47,31 @@ public class Validate extends Activity {
 	
 		private ProgressDialog pd;
 		private TableLayout tb;
+		
+		private String UserId="1";
+		private String Type="T3";
+		private IntentIntegrator intentI = new IntentIntegrator(this);
+		
+		public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+			IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+			if (scanResult != null) {
+			      String aux = scanResult.getContents();
+			      UserId = aux.substring(0, aux.indexOf(' '));
+			      Type = aux.substring(aux.indexOf(' ')+1);
+			}
+		}
+		
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.validate);
 			final Context context = this;
+			
+			intentI.initiateScan();
+			
 				AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 				int response=-1;
-				String UserId="1";
-				String Type="T3";
+				
 				int BusId= 303;
 				JSONArray arrayResponse;
 				@Override
