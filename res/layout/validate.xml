@@ -7,18 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.12" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="81dp"
-            android:orientation="vertical" >
-
-        </LinearLayout>
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/textView1"
@@ -32,6 +21,59 @@
             android:textColor="@color/white"
             android:textSize="32dp"
             android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.34" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="52dp"
+            android:text="Select the tittle"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/button_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroup1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="27dp"
+            android:text="Validate" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp" >
+
+            <RadioButton
+                android:id="@+id/radio_t1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="T1" />
+
+            <RadioButton
+                android:id="@+id/radio_t2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="T2" />
+
+            <RadioButton
+                android:id="@+id/radio_t3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="T3" />
+        </RadioGroup>
 
     </RelativeLayout>
 

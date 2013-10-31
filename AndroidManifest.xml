@@ -51,6 +51,10 @@
             android:label="@string/app_name" 
             android:name="TicketHistory" >
         </activity>
+        <activity 
+            android:label="@string/app_name" 
+            android:name="Validate" >
+        </activity>
     </application>
 
 </manifest>
