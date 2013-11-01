@@ -55,21 +55,22 @@ public class Validate extends Activity {
 		public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 			IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 			if (scanResult != null) {
-			      String aux = scanResult.getContents();
-			      UserId = aux.substring(0, aux.indexOf(' '));
-			      Type = "T" + aux.substring(aux.indexOf(' ')+1);
+			      if(scanResult.getContents() != null)
+			          {
+			      	  	  String aux = scanResult.getContents();
+					      UserId = aux.substring(0, aux.indexOf(';'));
+					      Type = "T" + aux.substring(aux.indexOf(';')+1);
+			          }
+			      else
+			          {
+			    	  	this.finish();
+					    overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
+					    return;
+			          }
 			}
-		}
-		
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			setContentView(R.layout.validate);
 			final Context context = this;
 			
-			intentI.initiateScan();
-			
-				AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+			AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 				int response=-1;
 				
 				int BusId= 303;
@@ -167,6 +168,7 @@ public class Validate extends Activity {
 						                    public void run() {
 						                    	dlg.cancel();
 						                        t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+						            			intentI.initiateScan();
 						                    }
 						                }, 1000); // after 2 second (or 2000 miliseconds), the task will be active.
 							}
@@ -206,6 +208,7 @@ public class Validate extends Activity {
 						                    public void run() {
 						                    	dlg.cancel();
 						                        t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+						            			intentI.initiateScan();
 						                    }
 						                }, 1000); // after 2 second (or 2000 miliseconds), the task will be active.
 							}
@@ -244,6 +247,7 @@ public class Validate extends Activity {
 						                    public void run() {
 						                    	dlg.cancel();
 						                        t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+						            			intentI.initiateScan();
 						                    }
 						                }, 1000); // after 2 second (or 2000 miliseconds), the task will be active.
 							}
@@ -283,6 +287,7 @@ public class Validate extends Activity {
 						                    public void run() {
 						                    	dlg.cancel();
 						                        t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+						            			intentI.initiateScan();
 						                    }
 						                }, 1000); // after 2 second (or 2000 miliseconds), the task will be active.
 							}
@@ -294,6 +299,16 @@ public class Validate extends Activity {
 					
 			};
 			task.execute((Void[])null);
+			overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
+			
+		}
+		
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.validate);
+			
+			intentI.initiateScan();
 			
 		}
 
