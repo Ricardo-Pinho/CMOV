@@ -34,8 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="52dp"
-            android:text="Select the tittle"
+            android:layout_marginTop="50dp"
+            android:text="Select the Type of Ticket:"
+            android:textColor="@color/white"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Button
@@ -45,6 +46,7 @@
             android:layout_below="@+id/radioGroup1"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="27dp"
+            android:textColor="@color/white"
             android:text="Validate" />
 
         <RadioGroup
@@ -59,19 +61,21 @@
                 android:id="@+id/radio_t1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
+                android:textColor="@color/white"
                 android:text="T1" />
 
             <RadioButton
                 android:id="@+id/radio_t2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text="T2" />
 
             <RadioButton
                 android:id="@+id/radio_t3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text="T3" />
         </RadioGroup>
 

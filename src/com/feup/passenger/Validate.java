@@ -30,8 +30,8 @@ import android.widget.TextView;
 
 public class Validate extends Activity {
 
-	private final int button_base_id = 2131361847;
 	private RadioGroup rg;
+	private RadioButton b1,b2,b3;
 	private Button bt_validate;
 	private ProgressDialog pd;
 	private TextView aux;
@@ -48,7 +48,13 @@ public class Validate extends Activity {
 		
 		rg = (RadioGroup)findViewById(R.id.radioGroup1);
 		
-		rg.clearCheck();
+		b1 = (RadioButton)findViewById(R.id.radio_t1);
+		b2 = (RadioButton)findViewById(R.id.radio_t2);
+		b3 = (RadioButton)findViewById(R.id.radio_t3);
+		b1.setId(1);
+		b2.setId(2);
+		b3.setId(3);
+		rg.check(1);
 		
 	}
 
@@ -68,12 +74,21 @@ public class Validate extends Activity {
 				
 				String aux;
 				
-				aux = Integer.toString(MainActivity.Id) + " " + Integer.toString(ticket_type-button_base_id);
+				aux = Integer.toString(MainActivity.Id) + ";" + Integer.toString(ticket_type);
 				
 				intentI.shareText(aux);
 			}
 				
 		});
+	}
+	
+	@Override
+	public void onBackPressed() 
+	{
+
+	    this.finish();
+	    overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
+	    return;
 	}
 	
 }

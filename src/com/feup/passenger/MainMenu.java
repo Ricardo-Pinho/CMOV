@@ -89,7 +89,7 @@ public class MainMenu extends Activity {
 				@Override
 				public void onClick(View arg0) {
 	 
-				    Intent intent = new Intent(context, Register.class);
+				    Intent intent = new Intent(context, Validate.class);
 	                startActivity(intent);
 	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
 	 

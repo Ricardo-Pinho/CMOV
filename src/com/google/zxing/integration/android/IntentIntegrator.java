@@ -377,6 +377,7 @@ public class IntentIntegrator {
     intent.setAction(BS_PACKAGE + ".ENCODE");
     intent.putExtra("ENCODE_TYPE", type);
     intent.putExtra("ENCODE_DATA", text);
+    intent.putExtra("ENCODE_SHOW_CONTENTS", false);
     String targetAppPackage = findTargetAppPackage(intent);
     if (targetAppPackage == null) {
       return showDownloadDialog();
@@ -385,6 +386,7 @@ public class IntentIntegrator {
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
     attachMoreExtras(intent);
+    
     activity.startActivity(intent);
     return null;
   }

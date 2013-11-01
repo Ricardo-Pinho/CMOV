@@ -21,7 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
+import net.simonvt.numberpicker.NumberPicker;
 import android.widget.TextView;
 
 public class BuyTickets extends Activity implements NumberPicker.OnValueChangeListener {

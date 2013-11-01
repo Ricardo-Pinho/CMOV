@@ -64,35 +64,23 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content" >
 	
-	            <NumberPicker
+	            <net.simonvt.numberpicker.NumberPicker
 	                android:id="@+id/numberPicker1"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:layout_alignParentTop="true"
-	                android:layout_centerHorizontal="true"
-	                android:scaleType="fitCenter"
-	                android:scaleX="0.99"
-	                android:scaleY="0.99" />
+	                 />
 	
-	            <NumberPicker
+	            <net.simonvt.numberpicker.NumberPicker
 	                android:id="@+id/numberPicker2"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:layout_alignParentTop="true"
-	                android:layout_centerHorizontal="true"
-	                android:scaleType="fitCenter"
-	                android:scaleX="0.99"
-	                android:scaleY="0.99" />
+	                 />
 	
-	            <NumberPicker
+	            <net.simonvt.numberpicker.NumberPicker
 	                android:id="@+id/numberPicker3"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:layout_alignParentTop="true"
-	                android:layout_centerHorizontal="true"
-	                android:scaleType="fitCenter"
-	                android:scaleX="0.99"
-	                android:scaleY="0.99" />
+	                 />
 	        </TableRow>
 	
 	        <TableRow
