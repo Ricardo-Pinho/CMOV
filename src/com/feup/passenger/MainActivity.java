@@ -12,7 +12,7 @@ import android.view.View.OnClickListener;
 
 public class MainActivity extends Activity {
 	
-	public static final String serverip="http://192.168.1.69:8080/Server/BusServer/";
+	public static final String serverip="http://192.168.1.2:8080/Server/BusServer/";
 	public static int Id;
 	
 	private Button login;

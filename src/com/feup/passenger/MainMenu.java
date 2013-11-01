@@ -7,6 +7,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,6 +24,7 @@ import android.widget.Button;
 
 public class MainMenu extends Activity {
 
+	private IntentIntegrator intentI = new IntentIntegrator(this);
 	private Button button1;
 	private Button button2;
 	private Button button3;
@@ -163,9 +166,7 @@ public class MainMenu extends Activity {
 		}
 		
 		public void addListenerOnButton6() {
-			 
-			final Context context = this;
-	 
+			 	 
 			button6 = (Button) findViewById(R.id.button6);
 	 
 			button6.setOnClickListener(new OnClickListener() {
@@ -173,9 +174,7 @@ public class MainMenu extends Activity {
 				@Override
 				public void onClick(View arg0) {
 	 
-				    Intent intent = new Intent(context, AvailableTickets.class);
-	                startActivity(intent);
-	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
+				    intentI.shareText(Integer.toString(MainActivity.Id));
 	 
 				}
 	 
