@@ -21,6 +21,13 @@ public class TerminalValidate {
         BusId=-1;
         Type="";
     }
+    
+        public TerminalValidate(int UserId, int BusId)
+    {
+        this.UserId=UserId;
+        this.BusId=BusId;
+    }
+    
     public TerminalValidate(int UserId, String Type, int BusId)
     {
         this.UserId=UserId;

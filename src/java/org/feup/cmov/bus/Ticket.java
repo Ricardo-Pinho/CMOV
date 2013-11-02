@@ -19,6 +19,7 @@ public class Ticket {
     public int Id, State, BusId,UserId;
     public String ValidatedTime;
     public String Type;
+    public String Username;
     //public static int Idcounter = 1;
     public Ticket() {
         Id=-1;
@@ -39,5 +40,14 @@ public class Ticket {
         this.ValidatedTime = ValidatedTime;
         this.Type=Type;
         this.UserId=UserId;
+    }
+    
+        public Ticket(int Id, int BusId, String ValidatedTime, String Type, int UserId, String Username) {
+        this.Id = Id;
+        this.BusId= BusId;
+        this.ValidatedTime = ValidatedTime;
+        this.Type=Type;
+        this.UserId=UserId;
+        this.Username=Username;
     }
 }
