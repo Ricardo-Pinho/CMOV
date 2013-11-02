@@ -153,7 +153,7 @@ public class GetTicketsServer extends Activity {
 									LayoutParams tp = new LayoutParams(0,LayoutParams.WRAP_CONTENT);
 									tp.weight=1;
 									int id = 0;
-									String Type="", ValidationTime="";
+									String Type="", ValidationTime="", userNick="";
 									int userid=0;
 									int busid=0;
 							        try {
@@ -162,6 +162,7 @@ public class GetTicketsServer extends Activity {
 										userid=jsonObject.getInt("UserId");
 										ValidationTime=jsonObject.getString("ValidatedTime");
 										busid=jsonObject.getInt("BusId");
+										userNick=jsonObject.getString("Username");
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
@@ -184,7 +185,7 @@ public class GetTicketsServer extends Activity {
 							        user.setLayoutParams(tp);
 							        user.setTextColor(Color.WHITE);
 							        user.setGravity(Gravity.CENTER);
-									user.setText(Integer.toString(userid));
+									user.setText(userNick+"("+Integer.toString(userid)+")");
 									
 									TextView time = new TextView(GetTicketsServer.this);
 							        time.setLayoutParams(tp);
