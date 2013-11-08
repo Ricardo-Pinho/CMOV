@@ -12,7 +12,7 @@ package org.feup.cmov.bus;
  */
 public class BuyTickets {
     
-    public int ID;
+    public String ID;
     public int T1No;
     public int T2No;
     public int T3No;
@@ -20,7 +20,7 @@ public class BuyTickets {
     public BuyTickets() {
     }
     
-    public BuyTickets(int ID, int T1No, int T2No, int T3No) {
+    public BuyTickets(String ID, int T1No, int T2No, int T3No) {
         this.ID=ID;
         this.T1No=T1No;
         this.T2No=T2No;

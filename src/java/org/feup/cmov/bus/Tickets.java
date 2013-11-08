@@ -11,6 +11,7 @@ import java.util.ArrayList;
 @XmlRootElement
 public class Tickets {
     public ArrayList<Ticket> Tickets = new ArrayList();
+    public String SyncDate = "";
     
     public Tickets() {
     }

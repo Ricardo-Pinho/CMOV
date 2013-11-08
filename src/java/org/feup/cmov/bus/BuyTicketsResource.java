@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.UUID;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -24,11 +25,12 @@ public class BuyTicketsResource {
     }
    
     @POST
-    @Produces("text/plain")
+    @Produces("application/json")
     @Consumes("application/json")
-    public String Buy(BuyTickets ticket) {
-            int index = 0;
-            int UserTicketIndex=0;
+    public Tickets Buy(BuyTickets ticket) {
+            String index = "";
+            String UserTicketIndex="0";
+            Tickets bt = new Tickets();
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             String url = "jdbc:derby://localhost:1527/BusDB";
@@ -38,118 +40,127 @@ public class BuyTicketsResource {
             ResultSet rs;
             System.out.println("Begin - "+Integer.toString(ticket.T1No));
             for(int i=0; i<ticket.T1No;i++){      
-                query = "SELECT MAX(Id) FROM APP.Tickets";
-                rs = stmt.executeQuery(query);
-                if (rs.next()) {
-                    index = rs.getInt(1) + 1;
-                }
-                query = "INSERT INTO APP.Tickets VALUES(" + index + ", 'T1' )";
+                UUID uuid = UUID.randomUUID();
+                index = uuid.toString();
+                
+                query = "INSERT INTO APP.Tickets VALUES('" + index + "', 'T1' )";
                 stmt.executeUpdate(query);
                 
                 
-                query = "SELECT MAX(Id) FROM APP.USERTICKETS";
-                rs = stmt.executeQuery(query);
-                if (rs.next()) {
-                    UserTicketIndex = rs.getInt(1) + 1;
-                }
-                //System.out.println("Got Index of UserTicket "+Integer.toString(UserTicketIndex)+ "-"+Integer.toString(ticket.ID)+"-"+Integer.toString(index));
+                uuid = UUID.randomUUID();
+                UserTicketIndex = uuid.toString();
                 
-                query = "INSERT INTO APP.USERTICKETS VALUES(" + UserTicketIndex + ", "+ticket.ID+", "+index+", 0 )";
+                query = "INSERT INTO APP.USERTICKETS VALUES('" + UserTicketIndex + "', '"+ticket.ID+"', '"+index+"', 0 )";
                 stmt.executeUpdate(query);
-                
+                Ticket newticket= new Ticket();
+                newticket.Id = index;
+                newticket.State=0;
+                newticket.Type="T1";
+                newticket.UserId=ticket.ID;
+                bt.Tickets.add(newticket);
             }
             
             for(int i=0; i<ticket.T2No;i++){
-                query = "SELECT MAX(Id) FROM APP.Tickets";
-                rs = stmt.executeQuery(query);
-                if (rs.next()) {
-                    index = rs.getInt(1) + 1;
-                }
-                query = "INSERT INTO APP.Tickets VALUES(" + index + ", 'T2' )";
+                UUID uuid = UUID.randomUUID();
+                index = uuid.toString();
+                
+                query = "INSERT INTO APP.Tickets VALUES('" + index + "', 'T2' )";
                 stmt.executeUpdate(query);
                 
-                query = "SELECT MAX(Id) FROM APP.USERTICKETS";
-                rs = stmt.executeQuery(query);
-                if (rs.next()) {
-                    UserTicketIndex = rs.getInt(1) + 1;
-                }
-                query = "INSERT INTO APP.USERTICKETS VALUES(" + UserTicketIndex + ", "+ticket.ID+", "+index+", 0 )";
+                uuid = UUID.randomUUID();
+                UserTicketIndex = uuid.toString();
+                
+                query = "INSERT INTO APP.USERTICKETS VALUES('" + UserTicketIndex + "', '"+ticket.ID+"', '"+index+"', 0 )";
                 stmt.executeUpdate(query);
+                Ticket newticket= new Ticket();
+                newticket.Id = index;
+                newticket.State=0;
+                newticket.Type="T2";
+                newticket.UserId=ticket.ID;
+                bt.Tickets.add(newticket);
             }
             
             for(int i=0; i<ticket.T3No;i++){
-                query = "SELECT MAX(Id) FROM APP.Tickets";
-                rs = stmt.executeQuery(query);
-                if (rs.next()) {
-                    index = rs.getInt(1) + 1;
-                }
-                query = "INSERT INTO APP.Tickets VALUES(" + index + ", 'T3' )";
+                UUID uuid = UUID.randomUUID();
+                index = uuid.toString();
+                
+                query = "INSERT INTO APP.Tickets VALUES('" + index + "', 'T3' )";
                 stmt.executeUpdate(query);
                              
-                query = "SELECT MAX(Id) FROM APP.USERTICKETS";
-                rs = stmt.executeQuery(query);
-                if (rs.next()) {
-                    UserTicketIndex = rs.getInt(1) + 1;
-                }
-                query = "INSERT INTO APP.USERTICKETS VALUES(" + UserTicketIndex + ", "+ticket.ID+", "+index+", 0 )";
+                uuid = UUID.randomUUID();
+                UserTicketIndex = uuid.toString();
+                
+                query = "INSERT INTO APP.USERTICKETS VALUES('" + UserTicketIndex + "', '"+ticket.ID+"', '"+index+"', 0 )";
                 stmt.executeUpdate(query);
+                Ticket newticket= new Ticket();
+                newticket.Id = index;
+                newticket.State=0;
+                newticket.Type="T3";
+                newticket.UserId=ticket.ID;
+                bt.Tickets.add(newticket);
             }
             int totalNumTickets = ticket.T1No+ticket.T2No+ticket.T3No;
             if(totalNumTickets>9)
             {
                 if(ticket.T1No>0)
                 {
-                    query = "SELECT MAX(Id) FROM APP.Tickets";
-                    rs = stmt.executeQuery(query);
-                    if (rs.next()) {
-                        index = rs.getInt(1) + 1;
-                    }
-                    query = "INSERT INTO APP.Tickets VALUES(" + index + ", 'T1' )";
+                    UUID uuid = UUID.randomUUID();
+                    index = uuid.toString();
+                
+                    query = "INSERT INTO APP.Tickets VALUES('" + index + "', 'T1' )";
                     stmt.executeUpdate(query);
 
-                    query = "SELECT MAX(Id) FROM APP.USERTICKETS";
-                    rs = stmt.executeQuery(query);
-                    if (rs.next()) {
-                        UserTicketIndex = rs.getInt(1) + 1;
-                    }
-                    query = "INSERT INTO APP.USERTICKETS VALUES(" + UserTicketIndex + ", "+ticket.ID+", "+index+", 0 )";
+                    uuid = UUID.randomUUID();
+                    UserTicketIndex = uuid.toString();
+                
+                    query = "INSERT INTO APP.USERTICKETS VALUES('" + UserTicketIndex + "', '"+ticket.ID+"', '"+index+"', 0 )";
                     stmt.executeUpdate(query);
+                    Ticket newticket= new Ticket();
+                    newticket.Id = index;
+                    newticket.State=0;
+                    newticket.Type="T1";
+                    newticket.UserId=ticket.ID;
+                    bt.Tickets.add(newticket);
                 }
                 else if(ticket.T2No>0)
                 {
-                    query = "SELECT MAX(Id) FROM APP.Tickets";
-                    rs = stmt.executeQuery(query);
-                    if (rs.next()) {
-                        index = rs.getInt(1) + 1;
-                    }
-                    query = "INSERT INTO APP.Tickets VALUES(" + index + ", 'T2' )";
+                    UUID uuid = UUID.randomUUID();
+                    index = uuid.toString();
+                
+                    query = "INSERT INTO APP.Tickets VALUES('" + index + "', 'T2' )";
                     stmt.executeUpdate(query);
 
-                    query = "SELECT MAX(Id) FROM APP.USERTICKETS";
-                    rs = stmt.executeQuery(query);
-                    if (rs.next()) {
-                        UserTicketIndex = rs.getInt(1) + 1;
-                    }
-                    query = "INSERT INTO APP.USERTICKETS VALUES(" + UserTicketIndex + ", "+ticket.ID+", "+index+", 0 )";
+                    uuid = UUID.randomUUID();
+                    UserTicketIndex = uuid.toString();
+                
+                    query = "INSERT INTO APP.USERTICKETS VALUES('" + UserTicketIndex + "', '"+ticket.ID+"', '"+index+"', 0 )";
                     stmt.executeUpdate(query);
+                    Ticket newticket= new Ticket();
+                    newticket.Id = index;
+                    newticket.State=0;
+                    newticket.Type="T1";
+                    newticket.UserId=ticket.ID;
+                    bt.Tickets.add(newticket);
                 }
                 else
                 {
-                    query = "SELECT MAX(Id) FROM APP.Tickets";
-                    rs = stmt.executeQuery(query);
-                    if (rs.next()) {
-                        index = rs.getInt(1) + 1;
-                    }
+                    UUID uuid = UUID.randomUUID();
+                    index = uuid.toString();
+                    
                     query = "INSERT INTO APP.Tickets VALUES(" + index + ", 'T3' )";
                     stmt.executeUpdate(query);
 
-                    query = "SELECT MAX(Id) FROM APP.USERTICKETS";
-                    rs = stmt.executeQuery(query);
-                    if (rs.next()) {
-                        UserTicketIndex = rs.getInt(1) + 1;
-                    }
-                    query = "INSERT INTO APP.USERTICKETS VALUES(" + UserTicketIndex + ", "+ticket.ID+", "+index+", 0 )";
+                    uuid = UUID.randomUUID();
+                    UserTicketIndex = uuid.toString();
+                
+                    query = "INSERT INTO APP.USERTICKETS VALUES('" + UserTicketIndex + "', '"+ticket.ID+"', '"+index+"', 0 )";
                     stmt.executeUpdate(query);
+                    Ticket newticket= new Ticket();
+                    newticket.Id = index;
+                    newticket.State=0;
+                    newticket.Type="T1";
+                    newticket.UserId=ticket.ID;
+                    bt.Tickets.add(newticket);
                 }
             }
             
@@ -157,23 +168,20 @@ public class BuyTicketsResource {
             System.out.println("End Tickets");
             double totalValue=ticket.T1No*Ticket.T1price+ticket.T2No*Ticket.T2price+ticket.T3No*Ticket.T3price;
             
-            query = "SELECT MAX(Id) FROM APP.USERTICKETS";
-                rs = stmt.executeQuery(query);
-                if (rs.next()) {
-                    index = rs.getInt(1) + 1;
-                }
+            UUID uuid = UUID.randomUUID();
+            index = uuid.toString();
+                
             Calendar currentDate = Calendar.getInstance(); //Get the current date
             SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd"); //format it as per your requirement
             String dateNow = formatter.format(currentDate.getTime());
-            query = "INSERT INTO APP.PURCHASES VALUES(" + index + ", "+ticket.ID+", "+totalValue+", '"+dateNow+"' )";
+            query = "INSERT INTO APP.PURCHASES VALUES('" + index + "', '"+ticket.ID+"', "+totalValue+", '"+dateNow+"' )";
             stmt.executeUpdate(query);
             
             conn.close();
         } catch (Exception e){
             System.out.println("error");
-            return "-1";
         }
         System.out.println("ok");
-        return "1";
+        return bt;
     }
 }

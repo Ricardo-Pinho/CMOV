@@ -24,25 +24,27 @@ public class TicketHistoryResource {
     @GET
     @Path("{id}")
     @Produces("application/json")
-    public TicketHistory getTicketHistory(@PathParam("id") String id) {
-        TicketHistory th = new TicketHistory();
+    public Tickets getTicketHistory(@PathParam("id") String id) {
+        Tickets th = new Tickets();
         
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             String url = "jdbc:derby://localhost:1527/BusDB";
             Connection conn = DriverManager.getConnection(url,"test","test");
             Statement stmt = conn.createStatement();
-            System.out.println("Try Scone");
-            String query = "SELECT * FROM APP.BUSTICKET,APP.TICKETS WHERE APP.BUSTICKET.TICKETID=APP.TICKETS.ID AND APP.TICKETS.ID IN (SELECT TICKETID FROM APP.USERTICKETS WHERE USERID = "+ id +" AND STATUS=1)";
+            System.out.println("Try Scone"+id);
+            String query = "SELECT * FROM APP.BUSTICKET,APP.TICKETS WHERE APP.BUSTICKET.TICKETID=APP.TICKETS.ID AND APP.TICKETS.ID IN (SELECT TICKETID FROM APP.USERTICKETS WHERE USERID = '"+ id +"' AND STATUS=1)";
             ResultSet rs = stmt.executeQuery(query);
             while ( rs.next() ) {
-                String date = rs.getString("VALIDATIONDATE");
-                date=date.substring(0,date.length()-5);
-                String type = rs.getString("TYPE");
-                String bus = rs.getString("BUSID");
-                String concat = date+";"+type+";"+bus;
-                System.out.println(concat);
-                th.Tickets.add(concat);
+                Ticket newticket = new Ticket();
+                newticket.ValidatedTime = rs.getString("VALIDATIONDATE");
+                //date=date.substring(0,date.length()-5);
+                newticket.Type = rs.getString("TYPE");
+                newticket.BusId = rs.getInt("BUSID");
+                newticket.UserId = id;
+                newticket.Id= rs.getString("TICKETID");
+                newticket.State = 1;
+                th.Tickets.add(newticket);
             }
             conn.close();
         } catch (Exception e) {

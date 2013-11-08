@@ -11,24 +11,24 @@ package org.feup.cmov.bus;
  * @author Ricardo
  */
 public class TerminalValidate {
-    public int UserId;
+    public String UserId;
     public String Type;
     public int BusId;
     
     public TerminalValidate()
     {
-        UserId=-1;
+        UserId="-1";
         BusId=-1;
         Type="";
     }
     
-        public TerminalValidate(int UserId, int BusId)
+        public TerminalValidate(String UserId, int BusId)
     {
         this.UserId=UserId;
         this.BusId=BusId;
     }
     
-    public TerminalValidate(int UserId, String Type, int BusId)
+    public TerminalValidate(String UserId, String Type, int BusId)
     {
         this.UserId=UserId;
         this.Type=Type;

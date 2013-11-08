@@ -33,7 +33,7 @@ public class PurchaseHistoryResource {
             Connection conn = DriverManager.getConnection(url,"test","test");
             Statement stmt = conn.createStatement();
             
-            String query = "SELECT Value, Date FROM APP.Purchases WHERE USERID = " + id;
+            String query = "SELECT Value, Date FROM APP.Purchases WHERE USERID = '" + id+"'";
             ResultSet rs = stmt.executeQuery(query);
             while ( rs.next() ) {
                 String value = rs.getString("Value");
