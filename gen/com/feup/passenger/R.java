@@ -128,18 +128,20 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_vertical_margin=0x7f080001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int item_background_holo_dark=0x7f020001;
-        public static final int item_background_holo_light=0x7f020002;
-        public static final int list_focused_holo=0x7f020003;
-        public static final int list_longpressed_holo=0x7f020004;
-        public static final int list_pressed_holo_dark=0x7f020005;
-        public static final int list_pressed_holo_light=0x7f020006;
-        public static final int list_selector_background_transition_holo_dark=0x7f020007;
-        public static final int list_selector_background_transition_holo_light=0x7f020008;
-        public static final int list_selector_disabled_holo_dark=0x7f020009;
-        public static final int list_selector_disabled_holo_light=0x7f02000a;
-        public static final int np_numberpicker_selection_divider=0x7f02000b;
+        public static final int button_customize=0x7f020000;
+        public static final int custom_edittext=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int item_background_holo_dark=0x7f020003;
+        public static final int item_background_holo_light=0x7f020004;
+        public static final int list_focused_holo=0x7f020005;
+        public static final int list_longpressed_holo=0x7f020006;
+        public static final int list_pressed_holo_dark=0x7f020007;
+        public static final int list_pressed_holo_light=0x7f020008;
+        public static final int list_selector_background_transition_holo_dark=0x7f020009;
+        public static final int list_selector_background_transition_holo_light=0x7f02000a;
+        public static final int list_selector_disabled_holo_dark=0x7f02000b;
+        public static final int list_selector_disabled_holo_light=0x7f02000c;
+        public static final int np_numberpicker_selection_divider=0x7f02000d;
     }
     public static final class id {
         public static final int CcNumber=0x7f060044;

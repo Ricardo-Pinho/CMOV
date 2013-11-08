@@ -294,19 +294,20 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_centerHorizontal="true"
-	        android:layout_marginTop="20dp"
+	        android:layout_marginTop="30dp"
 	        android:layout_below="@+id/TableLayout1"
 	        android:orientation="vertical" >
 
 	        <Button
 	            android:id="@+id/add_offline_button"
-	            android:layout_width="match_parent"
+	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_centerHorizontal="true"
 	            android:gravity="center"
 	            android:layout_weight="1"
 	            android:textColor="@color/white"
-	            android:text="Add Tickets" />
+	            android:minWidth="150dp"
+	            android:text="Add Tickets"
+	            android:background="@drawable/button_customize" />
 
 	    </LinearLayout>
 

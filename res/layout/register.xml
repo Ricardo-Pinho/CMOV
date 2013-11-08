@@ -59,7 +59,11 @@
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
 	                android:ems="10"
-	                android:text="test" />
+	                android:text="test"
+	                android:background="@drawable/custom_edittext"
+	                android:padding="8dp"
+	                android:layout_marginTop = "3dip"
+	                android:layout_marginLeft = "2dip" />
 
 	        </TableRow>
 	
@@ -80,7 +84,11 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:ems="10"
-	                android:text="test" />
+	                android:text="test"
+	                android:background="@drawable/custom_edittext"
+	                android:padding="8dp"
+	                android:layout_marginTop = "3dip"
+	                android:layout_marginLeft = "2dip" />
 
 	        </TableRow>
 	
@@ -102,7 +110,11 @@
 	                android:layout_height="wrap_content"
 	                android:ems="10"
 	                android:inputType="textPassword"
-	                android:text="123456" />
+	                android:text="123456"
+	                android:background="@drawable/custom_edittext"
+	                android:padding="8dp"
+	                android:layout_marginTop = "3dip"
+	                android:layout_marginLeft = "2dip" />
 
 	        </TableRow>
 	
@@ -165,7 +177,11 @@
 	                android:layout_height="wrap_content"
 	                android:ems="10"
 	                android:inputType="number"
-	                android:text="123456" />
+	                android:text="123456"
+	                android:background="@drawable/custom_edittext"
+	                android:padding="8dp"
+	                android:layout_marginTop = "3dip"
+	                android:layout_marginLeft = "2dip" />
 
 	        </TableRow>
 	
@@ -203,14 +219,16 @@
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/tableLayout1"
 	        android:layout_centerHorizontal="true"
-	        android:layout_marginTop="30dp"
+	        android:layout_marginTop="40dp"
 	        android:orientation="vertical" >
 	
 	        <Button
 	            android:id="@+id/register_button"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="Register" />
+	            android:text="Register"
+	            android:background="@drawable/button_customize"
+ 				android:textColor="@color/white" />
 	
 	    </LinearLayout>
 

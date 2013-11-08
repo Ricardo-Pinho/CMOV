@@ -47,7 +47,7 @@ public class OfflineMenu extends Activity {
 			addListenerOnButton4();
 			TextView name = (TextView) findViewById(R.id.namelog);
 			Log.d("Name", "UsrName"+MainActivity.usr.Name);
-			name.setText(MainActivity.usr.Name);
+			name.setText("Welcome, "+MainActivity.usr.Name);
 		}
 
 		@Override

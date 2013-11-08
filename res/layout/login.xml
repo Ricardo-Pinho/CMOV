@@ -52,7 +52,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="150dp"
-                android:text="test" />
+                android:text="test"
+                android:background="@drawable/custom_edittext"
+	            android:padding="8dp"
+	            android:layout_marginTop = "3dip" />
 
         </TableRow>
 
@@ -83,20 +86,26 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:minWidth="150dp"
-                android:text="123456" />
+                android:text="123456"
+                android:background="@drawable/custom_edittext"
+	            android:padding="8dp"
+	            android:layout_marginTop = "3dip" />
 
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow5"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
 
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login" />
+                android:text="Login"
+                android:background="@drawable/button_customize"
+                android:textColor="@color/white" />
         </TableRow>
     </TableLayout>
 

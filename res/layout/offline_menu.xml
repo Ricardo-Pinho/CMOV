@@ -63,27 +63,34 @@
 
             <TableRow
                 android:id="@+id/tableRow2"
-               android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
+               	android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center" >
 
                 <Button
                     android:id="@+id/button1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Validate" />
+                    android:text="Validate"
+                    android:background="@drawable/button_customize"
+              		android:textColor="@color/white" />
             </TableRow>
             
             <TableRow
                 android:id="@+id/tableRow6"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginBottom="30dp" >
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:gravity="center" >
 
                 <Button
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Verify Validation" />
+                    android:text="Verify Validation"
+                    android:background="@drawable/button_customize"
+              		android:textColor="@color/white" />
             </TableRow>
             
 
@@ -91,25 +98,32 @@
             <TableRow
                 android:id="@+id/tableRow4"
                 android:layout_width="fill_parent"
-            	android:layout_height="fill_parent" >
+            	android:layout_height="fill_parent"
+            	android:gravity="center" >
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ticket History" />
+                    android:text="Ticket History"
+                    android:background="@drawable/button_customize"
+              		android:textColor="@color/white" />
             </TableRow>
 
             <TableRow
                 android:id="@+id/tableRow5"
                 android:layout_width="fill_parent"
-            	android:layout_height="fill_parent" >
+            	android:layout_height="fill_parent"
+            	android:layout_marginTop="10dp"
+            	android:gravity="center" >
 
                 <Button
                     android:id="@+id/button4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Check Available Tickets" />
+                    android:text="Check Available Tickets"
+                    android:background="@drawable/button_customize"
+              		android:textColor="@color/white" />
             </TableRow>
         </TableLayout>
 	</LinearLayout>
