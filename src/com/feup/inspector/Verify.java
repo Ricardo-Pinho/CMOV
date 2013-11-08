@@ -36,6 +36,8 @@ import android.widget.TextView;
 public class Verify extends Activity {
 	private ProgressDialog pd;
 	private String UserId="-1";
+	private String TicketId="-1";
+	private int diff=-1;
 	private IntentIntegrator intentI = new IntentIntegrator(this);
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -44,10 +46,13 @@ public class Verify extends Activity {
 			if(scanResult.getContents() != null)
 	          {  
 				String aux = scanResult.getContents();
-				UserId = aux;
+				String [] trunc  = aux.split(";");
+				UserId = trunc[0];
+				TicketId = trunc[1];
 	          }
 	      else
 		      {
+			  	this.finish();
 			  	this.finish();
 			    overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
 			    return;
@@ -56,12 +61,11 @@ public class Verify extends Activity {
 		
 		final Context context = this;
 		
-		if (UserId != "-1")
+		if (!UserId.equals("-1"))
 		{
 			AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 				int response=-1;
 				
-				int BusId= 303;
 				JSONArray arrayResponse;
 				@Override
 				protected void onPreExecute() {
@@ -91,7 +95,7 @@ public class Verify extends Activity {
 				          con.setDoInput(true);
 				          con.setRequestProperty("Content-Type", "application/json");
 
-				          payload = "{\"UserId\":" + UserId + ", \"BusId\":" + BusId +"}";
+				          payload = "{\"UserId\":\"" + UserId + "\", \"BusId\":" + MainActivity.BusId + ", \"Id\":\"" + TicketId +"\"}";
 				          OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
 				          writer.write(payload, 0, payload.length());
 				          writer.close();
@@ -109,6 +113,16 @@ public class Verify extends Activity {
 				        }
 				        final String p = payload;
 				        response=Integer.valueOf(p);
+				        for(int i=0; i<MainActivity.verifiedUsers.size();i++)
+				        {
+				        	if (MainActivity.verifiedUsers.get(i).equals(UserId))
+				        		{
+				        			response=-4;
+				        			break;
+				        		}
+				        }
+				        if(response!=-4)
+				        	MainActivity.verifiedUsers.add(UserId);
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -212,6 +226,45 @@ public class Verify extends Activity {
 									// set dialog message
 									alertDialogBuilder
 										.setMessage("User did not Validate and has no tickets available.")
+										.setCancelable(false);
+									
+									MediaPlayer mp = MediaPlayer.create(Verify.this, R.raw.error);
+				                    mp.setOnCompletionListener(new OnCompletionListener() {
+
+				                        @Override
+				                        public void onCompletion(MediaPlayer mp) {
+				                            mp.release();
+				                        }
+
+				                    });   
+				                    mp.start();
+										// create alert dialog
+										AlertDialog alertDialog = alertDialogBuilder.create();
+						 
+										// show it
+										alertDialog.show();
+										final AlertDialog dlg = alertDialog;
+						                final Timer t = new Timer();
+						                t.schedule(new TimerTask() {
+						                    public void run() {
+						                    	dlg.cancel();
+						                        t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+						            			intentI.initiateScan();
+						                    }
+						                }, 2000); // after 2 second (or 2000 miliseconds), the task will be active.
+							}
+							break;
+							case -4:
+							{
+								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+										context);
+						 
+									// set title
+									alertDialogBuilder.setTitle("Error");
+						 
+									// set dialog message
+									alertDialogBuilder
+										.setMessage("User Already Verified")
 										.setCancelable(false);
 									
 									MediaPlayer mp = MediaPlayer.create(Verify.this, R.raw.error);

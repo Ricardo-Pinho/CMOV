@@ -32,6 +32,30 @@
 	            android:textColor="@color/white"
 	            android:textSize="32dp"
 	            android:textStyle="bold" />
+	        
+	        <TextView
+	            android:id="@+id/textView2"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:text="Offline"
+	            android:textAppearance="?android:attr/textAppearanceLarge"
+	            android:textColor="@color/white"
+	            android:textSize="22dp"
+	            android:textStyle="bold" />
+	        
+	        <TextView
+	            android:id="@+id/BusIdLog"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:text=""
+	            android:textAppearance="?android:attr/textAppearanceLarge"
+	            android:textColor="@color/white"
+	            android:textSize="20dp"
+	            android:textStyle="bold" />
 	
 	       <TableLayout
 	            android:id="@+id/tableLayout1"
@@ -49,14 +73,14 @@
 	                    android:id="@+id/button1"
 	                    android:layout_width="fill_parent"
 	                    android:layout_height="wrap_content"
-	                    android:text="Online Mode"
+	                    android:text="Get Data from Terminal"
 	                    android:textColor="@color/white"
 	                    android:layout_weight="1" />
 	            </TableRow>
-	
+	            
 	            <TableRow
 	                android:id="@+id/tableRow2"
-	               android:layout_width="fill_parent"
+	                android:layout_width="fill_parent"
 	                android:layout_height="fill_parent"
 	                android:layout_marginBottom="20dp" >
 	
@@ -64,21 +88,36 @@
 	                    android:id="@+id/button2"
 	                    android:layout_width="fill_parent"
 	                    android:layout_height="wrap_content"
-	                    android:text="Offline Mode"
-	                    android:layout_weight="1"
-	                    android:textColor="@color/white" />
+	                    android:text="View Validated Tickets"
+	                    android:textColor="@color/white"
+	                    android:layout_weight="1" />
 	            </TableRow>
-	            
+	
 	            <TableRow
 	                android:id="@+id/tableRow3"
 	               android:layout_width="fill_parent"
-	                android:layout_height="fill_parent" >
+	                android:layout_height="fill_parent"
+	                android:layout_marginBottom="20dp" >
 	
 	                <Button
 	                    android:id="@+id/button3"
 	                    android:layout_width="fill_parent"
 	                    android:layout_height="wrap_content"
-	                    android:text="Set Bus Id"
+	                    android:text="Verify Ticket"
+	                    android:layout_weight="1"
+	                    android:textColor="@color/white" />
+	            </TableRow>
+	            
+	            <TableRow
+	                android:id="@+id/tableRow4"
+	               android:layout_width="fill_parent"
+	                android:layout_height="fill_parent" >
+	
+	                <Button
+	                    android:id="@+id/button4"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:text="Reset Data"
 	                    android:layout_weight="1"
 	                    android:textColor="@color/white" />
 	            </TableRow>

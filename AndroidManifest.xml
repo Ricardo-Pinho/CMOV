@@ -33,6 +33,26 @@
             android:name="GetTicketsServer" >
         </activity>
         
+        <activity 
+            android:label="@string/app_name" 
+            android:name="OnlineMenu" >
+        </activity>
+        
+        <activity 
+            android:label="@string/app_name" 
+            android:name="OfflineMenu" >
+        </activity>
+        
+        <activity 
+            android:label="@string/app_name" 
+            android:name="ViewData" >
+        </activity>
+        
+        <activity 
+            android:label="@string/app_name" 
+            android:name="VerifyOffline" >
+        </activity>
+        
     </application>
 
 </manifest>

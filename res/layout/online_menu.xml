@@ -32,6 +32,18 @@
 	            android:textColor="@color/white"
 	            android:textSize="32dp"
 	            android:textStyle="bold" />
+	        
+	        <TextView
+	            android:id="@+id/BusIdLog"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:text=""
+	            android:textAppearance="?android:attr/textAppearanceLarge"
+	            android:textColor="@color/white"
+	            android:textSize="20dp"
+	            android:textStyle="bold" />
 	
 	       <TableLayout
 	            android:id="@+id/tableLayout1"
@@ -49,7 +61,7 @@
 	                    android:id="@+id/button1"
 	                    android:layout_width="fill_parent"
 	                    android:layout_height="wrap_content"
-	                    android:text="Online Mode"
+	                    android:text="View Validated Tickets"
 	                    android:textColor="@color/white"
 	                    android:layout_weight="1" />
 	            </TableRow>
@@ -64,12 +76,12 @@
 	                    android:id="@+id/button2"
 	                    android:layout_width="fill_parent"
 	                    android:layout_height="wrap_content"
-	                    android:text="Offline Mode"
+	                    android:text="Verify Tickets"
 	                    android:layout_weight="1"
 	                    android:textColor="@color/white" />
 	            </TableRow>
 	            
-	            <TableRow
+	            <!-- <TableRow
 	                android:id="@+id/tableRow3"
 	               android:layout_width="fill_parent"
 	                android:layout_height="fill_parent" >
@@ -78,10 +90,10 @@
 	                    android:id="@+id/button3"
 	                    android:layout_width="fill_parent"
 	                    android:layout_height="wrap_content"
-	                    android:text="Set Bus Id"
+	                    android:text="Reset Data"
 	                    android:layout_weight="1"
 	                    android:textColor="@color/white" />
-	            </TableRow>
+	            </TableRow> -->
 	            
 	           
 	        </TableLayout>

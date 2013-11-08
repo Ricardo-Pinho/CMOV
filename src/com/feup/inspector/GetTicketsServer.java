@@ -44,178 +44,178 @@ public class GetTicketsServer extends Activity {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.get_tickets_server);
 			final Context context = this;
-				AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
-				int response=-1;
-				JSONArray arrayResponse;
-				@Override
-				protected void onPreExecute() {
-					pd = new ProgressDialog(context);
-					pd.setTitle("Getting Validated Tickets");
-					pd.setMessage("Please wait.");
-					pd.setCancelable(false);
-					pd.setIndeterminate(true);
-					pd.show();
-				}
-					
-				@Override
-				protected Void doInBackground(Void... arg0) {
-					try {
-						HttpURLConnection con = null;
-				        String payload = "Error";
-				        try {
-
-				          // Build RESTful query (GET)
-				          URL url = new URL(MainActivity.serverip+"Tickets/GetValidTickets/" + MainActivity.key);
-
-				          con = (HttpURLConnection) url.openConnection();
-				          con.setReadTimeout(10000);
-				          con.setConnectTimeout(15000);
-				          con.setRequestMethod("GET");
-				          con.setDoInput(true);
-
-				          // Start the query
-				          con.connect();
-
-				          // Read results from the query
-				          BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8" ));
-				          payload = reader.readLine();
-				          reader.close();
-				          } catch (IOException e) {
-				        	  return null;
-				        } finally {
-				          if (con != null)
-				            con.disconnect();
-				        }
-				        if (payload != "Error")
-				          try {
-				            JSONObject jsonObject = new JSONObject(payload);			            
-				            arrayResponse = jsonObject.getJSONArray("Tickets");
-				            response=1;
-				          }
-				          catch (JSONException e) {
-				        	  return null;
-				          }
-				        final String p = payload;
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					return null;
-				}
+			AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+			int response=-1;
+			JSONArray arrayResponse;
+			@Override
+			protected void onPreExecute() {
+				pd = new ProgressDialog(context);
+				pd.setTitle("Getting Validated Tickets");
+				pd.setMessage("Please wait.");
+				pd.setCancelable(false);
+				pd.setIndeterminate(true);
+				pd.show();
+			}
 				
-				@Override
-				protected void onPostExecute(Void result) {
-					if (pd!=null) {
-						pd.dismiss();
-						switch(response) {
-							case -1:
-							{
-								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-										context);
-						 
-									// set title
-									alertDialogBuilder.setTitle("Error");
-						 
-									// set dialog message
-									alertDialogBuilder
-										.setMessage("Something went wrong. Please try again.")
-										.setCancelable(false)
-										.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
-											public void onClick(DialogInterface dialog,int id) {
-												dialog.cancel();
-												GetTicketsServer.this.finish();
-											    overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
-											}
-										  });
-						 
-										// create alert dialog
-										AlertDialog alertDialog = alertDialogBuilder.create();
-						 
-										// show it
-										alertDialog.show();
-							}
-								break;
-							default:
-							{
-								tb = (TableLayout)findViewById(R.id.TableLayout);
-								for(int i=0; i<arrayResponse.length();i++)
-								{
-									JSONObject jsonObject = null;
-									try {
-										jsonObject = new JSONObject(arrayResponse.get(i).toString());
-									} catch (JSONException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
-									LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-									
-									LayoutParams tp = new LayoutParams(0,LayoutParams.WRAP_CONTENT);
-									tp.weight=1;
-									int id = 0;
-									String Type="", ValidationTime="", userNick="";
-									int userid=0;
-									int busid=0;
-							        try {
-										id = jsonObject.getInt("Id");
-										Type = jsonObject.getString("Type");
-										userid=jsonObject.getInt("UserId");
-										ValidationTime=jsonObject.getString("ValidatedTime");
-										busid=jsonObject.getInt("BusId");
-										userNick=jsonObject.getString("Username");
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-									TableRow tr = new TableRow(GetTicketsServer.this);
-									tr.setLayoutParams(lp);
-									TextView Id = new TextView(GetTicketsServer.this);
-									Id.setLayoutParams(tp);
-									Id.setTextColor(Color.WHITE);
-									Id.setGravity(Gravity.CENTER);
-									Id.setText(Integer.toString(id));
-							        
-									TextView type = new TextView(GetTicketsServer.this);
-							        type.setLayoutParams(tp);
-							        type.setTextColor(Color.WHITE);
-							        type.setGravity(Gravity.CENTER);
-									type.setText(Type);
-							        
-									TextView user = new TextView(GetTicketsServer.this);
-							        user.setLayoutParams(tp);
-							        user.setTextColor(Color.WHITE);
-							        user.setGravity(Gravity.CENTER);
-									user.setText(userNick+"("+Integer.toString(userid)+")");
-									
-									TextView time = new TextView(GetTicketsServer.this);
-							        time.setLayoutParams(tp);
-							        time.setTextColor(Color.WHITE);
-							        time.setGravity(Gravity.CENTER);
-									time.setText(ValidationTime);
-									
-									TextView bus = new TextView(GetTicketsServer.this);
-							        bus.setLayoutParams(tp);
-							        bus.setTextColor(Color.WHITE);
-							        bus.setGravity(Gravity.CENTER);
-									bus.setText(Integer.toString(busid));
-									//Tickets newticket = new Tickets(id, Type, userid);
-									//MainActivity.validatedTickets.add(newticket);
-									tr.addView(Id);
-									tr.addView(type);
-									tr.addView(user);
-									tr.addView(time);
-									tr.addView(bus);
-									tb.addView(tr, i+1);
-								}
-							}
-								break;
+			@Override
+			protected Void doInBackground(Void... arg0) {
+				try {
+					HttpURLConnection con = null;
+			        String payload = "Error";
+			        try {
 
+			          // Build RESTful query (GET)
+			          URL url = new URL(MainActivity.serverip+"Tickets/GetValidTickets/" + MainActivity.BusId + "/" + MainActivity.key);
+
+			          con = (HttpURLConnection) url.openConnection();
+			          con.setReadTimeout(10000);
+			          con.setConnectTimeout(15000);
+			          con.setRequestMethod("GET");
+			          con.setDoInput(true);
+
+			          // Start the query
+			          con.connect();
+
+			          // Read results from the query
+			          BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8" ));
+			          payload = reader.readLine();
+			          reader.close();
+			          } catch (IOException e) {
+			        	  return null;
+			        } finally {
+			          if (con != null)
+			            con.disconnect();
+			        }
+			        if (payload != "Error")
+			          try {
+			            JSONObject jsonObject = new JSONObject(payload);			            
+			            arrayResponse = jsonObject.getJSONArray("Tickets");
+			            response=1;
+			          }
+			          catch (JSONException e) {
+			        	  return null;
+			          }
+			        final String p = payload;
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(Void result) {
+				if (pd!=null) {
+					pd.dismiss();
+					switch(response) {
+						case -1:
+						{
+							AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+									context);
+					 
+								// set title
+								alertDialogBuilder.setTitle("Error");
+					 
+								// set dialog message
+								alertDialogBuilder
+									.setMessage("Something went wrong. Please try again.")
+									.setCancelable(false)
+									.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface dialog,int id) {
+											dialog.cancel();
+											GetTicketsServer.this.finish();
+										    overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
+										}
+									  });
+					 
+									// create alert dialog
+									AlertDialog alertDialog = alertDialogBuilder.create();
+					 
+									// show it
+									alertDialog.show();
 						}
+							break;
+						default:
+						{
+							tb = (TableLayout)findViewById(R.id.TableLayout);
+							for(int i=0; i<arrayResponse.length();i++)
+							{
+								JSONObject jsonObject = null;
+								try {
+									jsonObject = new JSONObject(arrayResponse.get(i).toString());
+								} catch (JSONException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+								
+								LayoutParams tp = new LayoutParams(0,LayoutParams.WRAP_CONTENT);
+								tp.weight=1;
+								String id = "0";
+								String Type="", ValidationTime="", userNick="";
+								String userid="0";
+								int busid=0;
+						        try {
+									id = jsonObject.getString("Id");
+									Type = jsonObject.getString("Type");
+									userid=jsonObject.getString("UserId");
+									ValidationTime=jsonObject.getString("ValidatedTime");
+									busid=jsonObject.getInt("BusId");
+									userNick=jsonObject.getString("Username");
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								TableRow tr = new TableRow(GetTicketsServer.this);
+								tr.setLayoutParams(lp);
+								TextView Id = new TextView(GetTicketsServer.this);
+								Id.setLayoutParams(tp);
+								Id.setTextColor(Color.WHITE);
+								Id.setGravity(Gravity.CENTER);
+								Id.setText(id);
+						        
+								TextView type = new TextView(GetTicketsServer.this);
+						        type.setLayoutParams(tp);
+						        type.setTextColor(Color.WHITE);
+						        type.setGravity(Gravity.CENTER);
+								type.setText(Type);
+						        
+								TextView user = new TextView(GetTicketsServer.this);
+						        user.setLayoutParams(tp);
+						        user.setTextColor(Color.WHITE);
+						        user.setGravity(Gravity.CENTER);
+								user.setText(userNick+"("+userid+")");
+								
+								TextView time = new TextView(GetTicketsServer.this);
+						        time.setLayoutParams(tp);
+						        time.setTextColor(Color.WHITE);
+						        time.setGravity(Gravity.CENTER);
+								time.setText(ValidationTime);
+								
+								TextView bus = new TextView(GetTicketsServer.this);
+						        bus.setLayoutParams(tp);
+						        bus.setTextColor(Color.WHITE);
+						        bus.setGravity(Gravity.CENTER);
+								bus.setText(Integer.toString(busid));
+								//Tickets newticket = new Tickets(id, Type, userid);
+								//MainActivity.validatedTickets.add(newticket);
+								tr.addView(Id);
+								tr.addView(type);
+								tr.addView(user);
+								tr.addView(time);
+								tr.addView(bus);
+								tb.addView(tr, i+1);
+							}
+						}
+							break;
+
 					}
 				}
-					
-			};
-			task.execute((Void[])null);
+			}
+				
+		};
+		task.execute((Void[])null);
 			
 		}
 
