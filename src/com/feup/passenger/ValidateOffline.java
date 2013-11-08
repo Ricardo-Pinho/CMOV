@@ -51,7 +51,7 @@ public class ValidateOffline extends Activity {
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.validate);
+		setContentView(R.layout.validate_offline);
 		
 		addListenerOnButton();
 		

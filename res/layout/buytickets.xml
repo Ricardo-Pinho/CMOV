@@ -21,68 +21,77 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_centerHorizontal="true"
-	        
-	        android:layout_marginTop="50dp" >
-	
-	        <TableRow
-	            android:id="@+id/tableRow1"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center" >
-	
-	            <TextView
-	                android:id="@+id/textView2"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:gravity="center"
-	                android:minWidth="50dp"
-	                android:text="T1"
-	                android:textColor="@color/white"
-	                android:textStyle="bold" />
-	
-	            <TextView
-	                android:id="@+id/textView3"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:gravity="center"
-	                android:minWidth="50dp"
-	                android:text="T2"
-	                android:textColor="@color/white"
-	                android:textStyle="bold" />
-	
-	            <TextView
-	                android:id="@+id/textView4"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:gravity="center"
-	                android:minWidth="50dp"
-	                android:text="T3"
-	                android:textColor="@color/white"
-	                android:textStyle="bold" />
-	        </TableRow>
+	        android:layout_marginTop="40dp"
+	        android:shrinkColumns="1" >
 	
 	        <TableRow
 	            android:id="@+id/tableRow2"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:gravity="center" >
+	            android:layout_marginTop="30dp" >
+	
+	            <TextView
+	                android:id="@+id/textView3"
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:gravity="center"
+	                android:minWidth="50dp"
+	                android:text="T1"
+	                android:textColor="@color/white"
+	                android:textSize="20dp"
+	            	android:textStyle="bold" />
+	            <TextView
+	                android:id="@+id/textView4"
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:gravity="center"
+	                android:minWidth="50dp"
+	                android:text="T2"
+	                android:textColor="@color/white"
+	                android:textSize="20dp"
+	            	android:textStyle="bold" />
+	            <TextView
+	                android:id="@+id/textView5"
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:gravity="center"
+	                android:minWidth="50dp"
+	                android:text="T3"
+	                android:textColor="@color/white"
+	                android:textSize="20dp"
+	            	android:textStyle="bold" />
+	        </TableRow>
+	        
+	        <TableRow
+	            android:id="@+id/tableRow2"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content" >
 	
 	            <net.simonvt.numberpicker.NumberPicker
 	                android:id="@+id/numberPicker1"
-	                android:layout_width="match_parent"
+	                android:layout_width="0dp"
 	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:layout_weight="1"
 	                 />
 	
 	            <net.simonvt.numberpicker.NumberPicker
 	                android:id="@+id/numberPicker2"
-	                android:layout_width="match_parent"
+	                android:layout_width="0dp"
 	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:layout_weight="1"
 	                 />
 	
 	            <net.simonvt.numberpicker.NumberPicker
 	                android:id="@+id/numberPicker3"
-	                android:layout_width="match_parent"
+	                android:layout_width="0dp"
 	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:layout_weight="1"
 	                 />
 	        </TableRow>
 	
@@ -90,13 +99,16 @@
 	            android:id="@+id/tableRow3"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:gravity="center" >
+	            android:gravity="center"
+	            android:shrinkColumns="1" >
 	
 	            <TextView
 	                android:id="@+id/total"
-	                android:layout_width="wrap_content"
+	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
 	                android:text="Total: 0.0 €"
+	                android:gravity="center"
+	                android:layout_span="3"
 	                android:textColor="@color/white" />
 	        </TableRow>
 	
