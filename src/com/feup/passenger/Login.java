@@ -1,6 +1,7 @@
 package com.feup.passenger;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -15,6 +16,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -64,7 +67,8 @@ public class Login extends Activity {
 				public void onClick(View v) {
 					v.setEnabled(false);
 					AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
-						int response=-1;	
+						int response=-1;
+						String Name="", Nickname="", Password="", Id="";
 						@Override
 						protected void onPreExecute() {
 							pd = new ProgressDialog(context);
@@ -92,7 +96,8 @@ public class Login extends Activity {
 						          con.setDoOutput(true);
 						          con.setDoInput(true);
 						          con.setRequestProperty("Content-Type", "application/json");
-
+						          Nickname= et1.getText().toString();
+						          Password= et2.getText().toString();
 						          payload = "{\"Username\":\"" + et1.getText().toString() + "\",\"Password\":\"" + et2.getText().toString() + "\"}";
 						          OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
 						          writer.write(payload, 0, payload.length());
@@ -110,7 +115,24 @@ public class Login extends Activity {
 						            con.disconnect();
 						        }
 						        final String p = payload;
-						        response=Integer.valueOf(p);
+						        String[] resp = new String[p.length()];
+						        resp = p.split(";");
+						        Id=resp[0];
+						        response=1;
+						        Name = resp[1];
+						        Log.d("Test", "Testing:"+Id+"-"+Name);
+						        if(response>0)
+						        {
+									MainActivity.usr = new User(Name, Nickname, Password, Id);
+									File file = new File(Environment.getExternalStorageDirectory()+"/Passenger_data/", MainActivity.usr.Nickname+".data");
+									if (file.exists()) {
+									    MainActivity.usr.Load();
+									}
+									else
+									{
+										MainActivity.usr.Save();
+									}
+						        }
 								Thread.sleep(1000);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
@@ -177,7 +199,6 @@ public class Login extends Activity {
 										break;
 									default:
 									{
-										MainActivity.Id=response;
 										Login.this.finish();
 										Intent intent = new Intent(context, MainMenu.class);
 						                startActivity(intent);

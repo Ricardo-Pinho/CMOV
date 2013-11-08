@@ -7,6 +7,10 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -15,6 +19,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -133,7 +138,8 @@ public class BuyTickets extends Activity implements NumberPicker.OnValueChangeLi
 				public void onClick(View v) {
 					v.setEnabled(false);
 					AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
-						int response=-1;	
+						int response=-1;
+						JSONArray arrayResponse;
 						@Override
 						protected void onPreExecute() {
 							InputMethodManager imm = (InputMethodManager)getSystemService(
@@ -167,7 +173,7 @@ public class BuyTickets extends Activity implements NumberPicker.OnValueChangeLi
 						          con.setDoInput(true);
 						          con.setRequestProperty("Content-Type", "application/json");
 
-						          payload = "{\"ID\":" + Integer.toString(MainActivity.Id) + ",\"T1No\":" + np1.getValue() + ",\"T2No\":" + np2.getValue() + ",\"T3No\":" + np3.getValue() + "}";
+						          payload = "{\"ID\":\"" + MainActivity.usr.Id + "\",\"T1No\":" + np1.getValue() + ",\"T2No\":" + np2.getValue() + ",\"T3No\":" + np3.getValue() + "}";
 						          OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
 						          writer.write(payload, 0, payload.length());
 						          writer.close();
@@ -183,8 +189,39 @@ public class BuyTickets extends Activity implements NumberPicker.OnValueChangeLi
 						          if (con != null)
 						            con.disconnect();
 						        }
+						        if (payload != "Error")
+						          try {
+							            JSONObject jsonObject = new JSONObject(payload);				            
+							            arrayResponse = jsonObject.getJSONArray("Tickets");
+							            response=1;
+							            for(int i=0; i<arrayResponse.length();i++)
+										{
+											try {
+												jsonObject = new JSONObject(arrayResponse.get(i).toString());
+											} catch (JSONException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
+											
+											Tickets newticket = new Tickets();
+									        try {
+												newticket.Id = jsonObject.getString("Id");
+												newticket.Type = jsonObject.getString("Type");
+												newticket.UserId=jsonObject.getString("UserId");
+												newticket.Status=jsonObject.getInt("State");
+											} catch (JSONException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+									        	Log.d("new ticket", newticket.Id);
+									        	MainActivity.usr.tickets.add(newticket);
+										}
+										MainActivity.usr.Save();
+							          }
+							          catch (JSONException e) {
+							        	  return null;
+							          }
 						        final String p = payload;
-						        response=Integer.valueOf(p);
 								Thread.sleep(1000);
 							} catch (InterruptedException e) {
 								return null;
@@ -225,6 +262,7 @@ public class BuyTickets extends Activity implements NumberPicker.OnValueChangeLi
 										break;
 									default:
 									{
+										
 										AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 												context);
 								 

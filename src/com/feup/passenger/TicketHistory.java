@@ -6,13 +6,17 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.feup.passenger.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,6 +26,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -46,6 +51,9 @@ public class TicketHistory extends Activity {
 				AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 				int response=-1;
 				JSONArray arrayResponse;
+				JSONObject jsonObject;
+	            ArrayList<Tickets> newtickets = new ArrayList<Tickets>();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
 				@Override
 				protected void onPreExecute() {
 					pd = new ProgressDialog(context);
@@ -64,7 +72,7 @@ public class TicketHistory extends Activity {
 				        try {
 
 				          // Build RESTful query (GET)
-				          URL url = new URL(MainActivity.serverip+"TicketHistory/" + MainActivity.Id);
+				          URL url = new URL(MainActivity.serverip+"TicketHistory/" + MainActivity.usr.Id);
 
 				          con = (HttpURLConnection) url.openConnection();
 				          con.setReadTimeout(10000);
@@ -87,9 +95,69 @@ public class TicketHistory extends Activity {
 				        }
 				        if (payload != "Error")
 				          try {
-				            JSONObject jsonObject = new JSONObject(payload);			            
+				            jsonObject = new JSONObject(payload);			            
 				            arrayResponse = jsonObject.getJSONArray("Tickets");
 				            response=1;
+				            for(int i=0; i<arrayResponse.length();i++)
+							{
+								JSONObject jsonObject = null;
+								try {
+									jsonObject = new JSONObject(arrayResponse.get(i).toString());
+								} catch (JSONException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+						        boolean exists=false;
+								Tickets newticket = new Tickets();
+						        try {
+									newticket.Id = jsonObject.getString("Id");
+									newticket.Type = jsonObject.getString("Type");
+									newticket.UserId=jsonObject.getString("UserId");
+									newticket.Status=jsonObject.getInt("State");
+									newticket.ValidatedTime=Calendar.getInstance();
+								    try {
+										newticket.ValidatedTime.setTime(sdf.parse(jsonObject.getString("ValidatedTime")));
+									} catch (ParseException e) {
+										Log.d("Error", "Error parsing Validation Date.");
+										e.printStackTrace();
+									}
+									newticket.BusId=jsonObject.getInt("BusId");
+									newtickets.add(newticket);
+									for(int j=0; j<MainActivity.usr.busIds.size(); j++)
+									{
+										if(MainActivity.usr.busIds.get(j)==newticket.BusId)
+											{
+												
+												exists=true;
+											}
+									}
+									if(!exists)
+										 {
+											MainActivity.usr.busIds.add(newticket.BusId);
+										 }
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+						        exists=false;
+						        for(int j=0; j<MainActivity.usr.tickets.size();j++)
+						        	{
+						        		if(MainActivity.usr.tickets.get(j).Id.equals(newticket.Id))
+						        			{
+						        				MainActivity.usr.tickets.get(j).ValidatedTime=newticket.ValidatedTime;
+						        				MainActivity.usr.tickets.get(j).BusId=newticket.BusId;
+						        				MainActivity.usr.tickets.get(j).Status=1;
+						        				exists=true;
+						        			}
+						        	}
+						        if(!exists)
+						        	{
+						        		Log.d("new ticket", newticket.Id);
+						        		MainActivity.usr.tickets.add(newticket);
+						        	}
+							}
+					        MainActivity.usr.Save();
+				            
 				          }
 				          catch (JSONException e) {
 				        	  return null;
@@ -137,8 +205,11 @@ public class TicketHistory extends Activity {
 								break;
 							default:
 							{
+								//TextView tv = (TextView)findViewById(R.id.textView4);
+								//tv.setText(jsonObject.toString());
 								tb = (TableLayout)findViewById(R.id.TableLayout);
-								for(int i=0; i<arrayResponse.length();i++)
+								int rowno=1;
+								for(int i=0; i<newtickets.size();i++)
 								{
 									LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
 									
@@ -147,32 +218,27 @@ public class TicketHistory extends Activity {
 									
 									TableRow tr = new TableRow(TicketHistory.this);
 									tr.setLayoutParams(lp);
-									String [] trunc = null;
-									try {
-										trunc = arrayResponse.get(i).toString().split(";");
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
 									TextView date = new TextView(TicketHistory.this);
 									date.setLayoutParams(tp);
 									date.setTextColor(Color.WHITE);
 									date.setGravity(Gravity.CENTER);
-							        date.setText(trunc[0]);
+									String dateString = sdf.format(newtickets.get(i).ValidatedTime.getTime());
+							        date.setText(dateString);
 							        TextView type = new TextView(TicketHistory.this);
 							        type.setLayoutParams(tp);
 							        type.setTextColor(Color.WHITE);
 							        type.setGravity(Gravity.CENTER);
-							        type.setText(trunc[1]);
+							        type.setText(newtickets.get(i).Type);
 							        TextView bus = new TextView(TicketHistory.this);
 							        bus.setLayoutParams(tp);
 							        bus.setTextColor(Color.WHITE);
 							        bus.setGravity(Gravity.CENTER);
-							        bus.setText(trunc[2]);
+							        bus.setText(Integer.toString(newtickets.get(i).BusId));
 									tr.addView(date);
 									tr.addView(type);
 									tr.addView(bus);
-									tb.addView(tr, i+1);
+									tb.addView(tr, rowno);
+									rowno++;
 								}
 							}
 								break;

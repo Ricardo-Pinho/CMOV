@@ -36,6 +36,7 @@
 	    <TableLayout
 	        android:id="@+id/tableLayout1"
 	        android:layout_width="match_parent"
+	        android:shrinkColumns="1"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
 	        android:layout_below="@+id/linearLayout1" >
@@ -55,11 +56,10 @@
 	
 	            <EditText
 	                android:id="@+id/name"
-	                android:layout_width="wrap_content"
+	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
 	                android:ems="10"
-	                android:text="test"
-	                android:textColor="@color/white" />
+	                android:text="test" />
 
 	        </TableRow>
 	
@@ -80,8 +80,7 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:ems="10"
-	                android:text="test"
-	                android:textColor="@color/white" />
+	                android:text="test" />
 
 	        </TableRow>
 	
@@ -103,8 +102,7 @@
 	                android:layout_height="wrap_content"
 	                android:ems="10"
 	                android:inputType="textPassword"
-	                android:text="123456"
-	                android:textColor="@color/white" />
+	                android:text="123456" />
 
 	        </TableRow>
 	
@@ -167,8 +165,7 @@
 	                android:layout_height="wrap_content"
 	                android:ems="10"
 	                android:inputType="number"
-	                android:text="123456"
-	                android:textColor="@color/white" />
+	                android:text="123456" />
 
 	        </TableRow>
 	
@@ -184,11 +181,19 @@
 	                android:text="Expires In:"
 	                android:textColor="@color/white" />
 	
+
+	        </TableRow>
+	       <TableRow
+	            android:id="@+id/tableRow10"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" >
+
 	            <DatePicker
 	                android:id="@+id/CcValidation"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:calendarViewShown="false"
+	                android:layout_span="2"
 	                android:textColor="@color/white" />
 	        </TableRow>
 	    </TableLayout>
@@ -205,8 +210,7 @@
 	            android:id="@+id/register_button"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="Register"
-	            android:textColor="@color/white" />
+	            android:text="Register" />
 	
 	    </LinearLayout>
 

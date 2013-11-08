@@ -16,10 +16,11 @@
 
 	     <TableLayout
 	        android:id="@+id/TableLayout"
+	        android:layout_below="@+id/LinearLayout1"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_centerHorizontal="true"
-	        android:layout_marginTop="40dp"
+	        android:layout_marginTop="10dp"
 	        android:stretchColumns="1" >
 
 	        <TableRow
@@ -64,6 +65,7 @@
 	    </TableLayout>
 
 	    <LinearLayout
+	        android:id="@+id/LinearLayout1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentTop="true"
@@ -72,14 +74,22 @@
 
 	        <TextView
 	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
+	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:text="Ticket History"
 	            android:gravity="center"
+	            android:text="Ticket History"
 	            android:textAppearance="?android:attr/textAppearanceLarge"
 	            android:textColor="@color/white"
 	            android:textSize="32dp"
 	            android:textStyle="bold" />
+
+	        <TextView
+	            android:id="@+id/textView4"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dp"
+	            android:text="Warning: Use Date and Bus may not be correctly set."
+	            android:textColor="@color/white" />
 
 	    </LinearLayout>
 

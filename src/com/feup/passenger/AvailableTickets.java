@@ -6,9 +6,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 
 import com.feup.passenger.R;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +29,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -45,7 +53,9 @@ public class AvailableTickets extends Activity {
 			final Context context = this;
 				AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 				int response=-1;
-				String StringResponse="";
+				JSONArray arrayResponse;
+				String SyncDate="";
+	            int T1No=0, T2No=0,T3No=0;
 				@Override
 				protected void onPreExecute() {
 					pd = new ProgressDialog(context);
@@ -64,7 +74,7 @@ public class AvailableTickets extends Activity {
 				        try {
 
 				          // Build RESTful query (GET)
-				          URL url = new URL(MainActivity.serverip+"AvailableTickets/" + MainActivity.Id);
+				          URL url = new URL(MainActivity.serverip+"AvailableTickets/" + MainActivity.usr.Id);
 
 				          con = (HttpURLConnection) url.openConnection();
 				          con.setReadTimeout(10000);
@@ -88,8 +98,86 @@ public class AvailableTickets extends Activity {
 				        if (payload != "Error")
 				          try {
 				            JSONObject jsonObject = new JSONObject(payload);				            
-				            StringResponse = jsonObject.getString("Tickets");
+				            arrayResponse = jsonObject.getJSONArray("Tickets");
+				            SyncDate = jsonObject.getString("SyncDate");
 				            response=1;
+							for(int i=0; i<arrayResponse.length();i++)
+							{
+								try {
+									jsonObject = new JSONObject(arrayResponse.get(i).toString());
+								} catch (JSONException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								
+								Tickets newticket = new Tickets();
+						        try {
+									newticket.Id = jsonObject.getString("Id");
+									newticket.Type = jsonObject.getString("Type");
+									if(newticket.Type.equals("T1"))
+										T1No++;
+									else if (newticket.Type.equals("T2"))
+										T2No++;
+									else
+										T3No++;
+									newticket.UserId=jsonObject.getString("UserId");
+									newticket.Status=jsonObject.getInt("State");
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+						        boolean exists=false;
+						        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
+						        for(int j =0; j<MainActivity.usr.tickets.size();j++)
+						        	{
+						        		if(MainActivity.usr.tickets.get(j).Id.equals(newticket.Id))
+						        			{
+						        				//MainActivity.usr.tickets.get(j).visited=true;
+						        				if(MainActivity.usr.tickets.get(j).Status==1)
+						        				{
+						        					Calendar currentDate = Calendar.getInstance();
+						        					try {
+						        						Log.d("Calendar", "CalendarTime:"+SyncDate);
+														currentDate.setTime(sdf.parse(SyncDate));
+													} catch (ParseException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													}
+						        					DateTime dtime1 = new DateTime(currentDate);
+						        					DateTime dtime2 = new DateTime(MainActivity.usr.tickets.get(j).ValidatedTime);
+						        					int diff = Days.daysBetween(dtime2, dtime1).getDays();
+						        					if(diff>0)
+						        					{
+							        					MainActivity.usr.tickets.get(j).Status=0;
+							        					MainActivity.usr.tickets.get(j).BusId=-1;
+							        					MainActivity.usr.tickets.get(j).ValidatedTime = Calendar.getInstance();
+						        					}
+						        				}
+						        				exists=true;
+						        				break;
+						        			} 
+						        	}
+						        if(!exists)
+						        	{
+						        		Log.d("new ticket", newticket.Id);
+						        		MainActivity.usr.tickets.add(newticket);
+						        	}
+							}
+							/*for(int i = 0 ; i< MainActivity.usr.tickets.size();i++)
+							{
+								if(!MainActivity.usr.tickets.get(i).visited)
+									{
+										if(MainActivity.usr.tickets.get(i).Status==0)
+										{
+											MainActivity.usr.tickets.remove(i);
+											i--;
+										}
+									}
+								else
+									MainActivity.usr.tickets.get(i).visited=false;
+							}*/
+							Log.d("saved","yes");
+							MainActivity.usr.Save();
 				          }
 				          catch (JSONException e) {
 				        	  return null;
@@ -136,28 +224,27 @@ public class AvailableTickets extends Activity {
 								break;
 							default:
 							{
+								
 								tr = (TableRow)findViewById(R.id.tableRow2);
 									
 									LayoutParams tp = new LayoutParams(0,LayoutParams.WRAP_CONTENT);
 									tp.weight=1;
 									
-									String [] trunc = null;
-									trunc = StringResponse.split(";");
 									TextView T1 = new TextView(AvailableTickets.this);
 									T1.setLayoutParams(tp);
 									T1.setTextColor(Color.WHITE);
 									T1.setGravity(Gravity.CENTER);
-							        T1.setText(trunc[0]);
+							        T1.setText(Integer.toString(T1No));
 							        TextView T2 = new TextView(AvailableTickets.this);
 							        T2.setLayoutParams(tp);
 							        T2.setTextColor(Color.WHITE);
 							        T2.setGravity(Gravity.CENTER);
-							        T2.setText(trunc[1]);
+							        T2.setText(Integer.toString(T2No));
 							        TextView T3 = new TextView(AvailableTickets.this);
 							        T3.setLayoutParams(tp);
 							        T3.setTextColor(Color.WHITE);
 							        T3.setGravity(Gravity.CENTER);
-							        T3.setText(trunc[2]);
+							        T3.setText(Integer.toString(T3No));
 									tr.addView(T1);
 									tr.addView(T2);
 									tr.addView(T3);

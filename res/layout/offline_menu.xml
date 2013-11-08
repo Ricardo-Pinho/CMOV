@@ -30,16 +30,28 @@
             android:gravity="center"
             android:text="Main Menu"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/white"
             android:textSize="32dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/white" />
+        
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Offline"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/namelog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:gravity="center"
+            android:textColor="@color/white"
             android:text=""
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -55,7 +67,7 @@
                 android:layout_height="fill_parent" >
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/button1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Validate" />
@@ -68,52 +80,13 @@
                 android:layout_marginBottom="30dp" >
 
                 <Button
-                    android:id="@+id/button6"
+                    android:id="@+id/button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Verify Validation" />
             </TableRow>
             
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal" >
 
-                <Button
-                    android:id="@+id/button1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Buy Tickets"
-                    android:gravity="center" />
-            </TableRow>
-            
-            <TableRow
-                android:id="@+id/tableRow7"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="30dp" >
-
-                <Button
-                    android:id="@+id/button7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add tickets Offline"
-                    android:gravity="center" />
-            </TableRow>
-            
-            <TableRow
-                android:id="@+id/tableRow3"
-                android:layout_width="fill_parent"
-            	android:layout_height="fill_parent" >
-
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Purchase History" />
-            </TableRow>
 
             <TableRow
                 android:id="@+id/tableRow4"
@@ -121,7 +94,7 @@
             	android:layout_height="fill_parent" >
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/button3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ticket History" />
@@ -133,7 +106,7 @@
             	android:layout_height="fill_parent" >
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/button4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Check Available Tickets" />

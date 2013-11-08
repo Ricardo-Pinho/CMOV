@@ -6,5 +6,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="library.jar"/>
+	<classpathentry kind="lib" path="libs"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

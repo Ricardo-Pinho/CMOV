@@ -52,8 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="150dp"
-                android:text="test"
-                android:textColor="@color/white" />
+                android:text="test" />
 
         </TableRow>
 
@@ -84,8 +83,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:minWidth="150dp"
-                android:text="123456"
-                android:textColor="@color/white" />
+                android:text="123456" />
 
         </TableRow>
 
@@ -98,8 +96,7 @@
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
-                android:textColor="@color/white" />
+                android:text="Login" />
         </TableRow>
     </TableLayout>
 

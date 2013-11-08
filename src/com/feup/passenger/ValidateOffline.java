@@ -37,7 +37,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class Validate extends Activity {
+public class ValidateOffline extends Activity {
 
 	private RadioGroup rg;
 	private RadioButton b1,b2,b3, b4, b5;
@@ -108,15 +108,14 @@ public class Validate extends Activity {
 						.setCancelable(false)
 						.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,int id) {
-								int busid=-1;
 								Tickets newticket = new Tickets();
-								final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
+								int busid=-1;
+								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
 								dialog.cancel();
 								int ticket_type = 0;
 								ticket_type = rg.getCheckedRadioButtonId();
 								boolean hastickets=false, alreadyvalidated=false;
 								String aux;
-								
 								if (b4.isChecked())
 								{
 									if(sp.getSelectedItem()!=null)
@@ -153,7 +152,7 @@ public class Validate extends Activity {
 											// show it
 											alertDialog.show();
 								}
-								else
+								else 
 								{
 									switch (ticket_type)
 									{
@@ -191,7 +190,7 @@ public class Validate extends Activity {
 														break;
 													}
 												}
-												if (MainActivity.usr.tickets.get(i).Status==0 && MainActivity.usr.tickets.get(i).Type.equals("T1"))
+												if (MainActivity.usr.tickets.get(i).Status==2 && MainActivity.usr.tickets.get(i).Type.equals("T1"))
 														{
 															MainActivity.usr.tickets.get(i).Status=1;
 															MainActivity.usr.tickets.get(i).BusId=busid;
@@ -238,7 +237,7 @@ public class Validate extends Activity {
 														break;
 													}
 												}
-												if (MainActivity.usr.tickets.get(i).Status==0 && MainActivity.usr.tickets.get(i).Type.equals("T2"))
+												if (MainActivity.usr.tickets.get(i).Status==2 && MainActivity.usr.tickets.get(i).Type.equals("T2"))
 														{
 															MainActivity.usr.tickets.get(i).Status=1;
 															MainActivity.usr.tickets.get(i).BusId=busid;
@@ -285,16 +284,16 @@ public class Validate extends Activity {
 														break;
 													}
 												}
-												if (MainActivity.usr.tickets.get(i).Status==0 && MainActivity.usr.tickets.get(i).Type.equals("T3"))
-													{
-														MainActivity.usr.tickets.get(i).Status=1;
-														MainActivity.usr.tickets.get(i).BusId=busid;
-														MainActivity.usr.tickets.get(i).ValidatedTime = Calendar.getInstance();
-														newticket.ValidatedTime = MainActivity.usr.tickets.get(i).ValidatedTime;
-														newticket.Id = MainActivity.usr.tickets.get(i).Id;
-														hastickets=true;
-														break;
-													}
+												if (MainActivity.usr.tickets.get(i).Status==2 && MainActivity.usr.tickets.get(i).Type.equals("T3"))
+														{
+															MainActivity.usr.tickets.get(i).Status=1;
+															MainActivity.usr.tickets.get(i).BusId=busid;
+															MainActivity.usr.tickets.get(i).ValidatedTime = Calendar.getInstance();
+															newticket.ValidatedTime = MainActivity.usr.tickets.get(i).ValidatedTime;
+															newticket.Id = MainActivity.usr.tickets.get(i).Id;
+															hastickets=true;
+															break;
+														}
 											}
 										}
 										break;
@@ -328,7 +327,7 @@ public class Validate extends Activity {
 										aux = newticket.Id + ";" + MainActivity.usr.Id + ";" + Integer.toString(ticket_type) + ";" + sdf.format(newticket.ValidatedTime.getTime()) + ";" + MainActivity.usr.Nickname;
 										
 										intentI.shareText(aux);
-										Validate.this.finish();
+										ValidateOffline.this.finish();
 									    overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
 									}
 									else{
@@ -336,25 +335,24 @@ public class Validate extends Activity {
 										aux = newticket.Id + ";" + MainActivity.usr.Id + ";" + Integer.toString(ticket_type) + ";" + sdf.format(newticket.ValidatedTime.getTime()) + ";" + MainActivity.usr.Nickname;
 										
 										intentI.shareText(aux);
-										Validate.this.finish();
+										ValidateOffline.this.finish();
 									    overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
 										}
 									}
 								}
-							  })
-							.setNegativeButton("No", new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int id) {
-									dialog.cancel();
-								}
-							});
-			 
-							// create alert dialog
-							AlertDialog alertDialog = alertDialogBuilder.create();
-			 
-							// show it
-							alertDialog.show();
-					}
-			
+						  })
+						.setNegativeButton("No", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+		 
+						// create alert dialog
+						AlertDialog alertDialog = alertDialogBuilder.create();
+		 
+						// show it
+						alertDialog.show();
+			}
 				
 		});
 	}

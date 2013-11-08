@@ -8,6 +8,7 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="18" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -54,6 +55,26 @@
         <activity 
             android:label="@string/app_name" 
             android:name="Validate" >
+        </activity>
+        <activity 
+            android:label="@string/app_name" 
+            android:name="ValidateOffline" >
+        </activity>
+        <activity 
+            android:label="@string/app_name" 
+            android:name="OfflineMenu" >
+        </activity>
+        <activity 
+            android:label="@string/app_name" 
+            android:name="OfflineTicketHistory" >
+        </activity>
+        <activity 
+            android:label="@string/app_name" 
+            android:name="OfflineAvailableTickets" >
+        </activity>
+        <activity 
+            android:label="@string/app_name" 
+            android:name="AddTicketsOffline" >
         </activity>
     </application>
 

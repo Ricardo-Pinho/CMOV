@@ -64,7 +64,7 @@ public class PurchaseHistory extends Activity {
 				        try {
 
 				          // Build RESTful query (GET)
-				          URL url = new URL(MainActivity.serverip+"PurchaseHistory/" + MainActivity.Id);
+				          URL url = new URL(MainActivity.serverip+"PurchaseHistory/" + MainActivity.usr.Id);
 
 				          con = (HttpURLConnection) url.openConnection();
 				          con.setReadTimeout(10000);

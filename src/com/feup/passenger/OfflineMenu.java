@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.Calendar;
 
 import org.joda.time.DateTime;
+import org.joda.time.Hours;
 import org.joda.time.Minutes;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -28,28 +29,22 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainMenu extends Activity {
+public class OfflineMenu extends Activity {
 
 	private IntentIntegrator intentI = new IntentIntegrator(this);
 	private Button button1;
 	private Button button2;
 	private Button button3;
 	private Button button4;
-	private Button button5;
-	private Button button6;
-	private Button button7;
 	//test
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.main_menu);
+			setContentView(R.layout.offline_menu);
 			addListenerOnButton1();
 			addListenerOnButton2();
 			addListenerOnButton3();
 			addListenerOnButton4();
-			addListenerOnButton5();
-			addListenerOnButton6();
-			addListenerOnButton7();
 			TextView name = (TextView) findViewById(R.id.namelog);
 			Log.d("Name", "UsrName"+MainActivity.usr.Name);
 			name.setText(MainActivity.usr.Name);
@@ -82,7 +77,7 @@ public class MainMenu extends Activity {
 				@Override
 				public void onClick(View arg0) {
 	 
-				    Intent intent = new Intent(context, BuyTickets.class);
+				    Intent intent = new Intent(context, ValidateOffline.class);
 	                startActivity(intent);   
 	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
 	 
@@ -99,90 +94,6 @@ public class MainMenu extends Activity {
 			button2 = (Button) findViewById(R.id.button2);
 	 
 			button2.setOnClickListener(new OnClickListener() {
-	 
-				@Override
-				public void onClick(View arg0) {
-	 
-				    Intent intent = new Intent(context, Validate.class);
-	                startActivity(intent);
-	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
-	 
-				}
-	 
-			});
-	 
-		}
-		
-		public void addListenerOnButton3() {
-			 
-			final Context context = this;
-	 
-			button3 = (Button) findViewById(R.id.button3);
-	 
-			button3.setOnClickListener(new OnClickListener() {
-	 
-				@Override
-				public void onClick(View arg0) {
-	 
-				    Intent intent = new Intent(context, PurchaseHistory.class);
-	                startActivity(intent);
-	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
-	 
-				}
-	 
-			});
-	 
-		}
-		
-		public void addListenerOnButton4() {
-			 
-			final Context context = this;
-	 
-			button4 = (Button) findViewById(R.id.button4);
-	 
-			button4.setOnClickListener(new OnClickListener() {
-	 
-				@Override
-				public void onClick(View arg0) {
-	 
-				    Intent intent = new Intent(context, TicketHistory.class);
-	                startActivity(intent);
-	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
-	 
-				}
-	 
-			});
-	 
-		}
-		
-		public void addListenerOnButton5() {
-			 
-			final Context context = this;
-	 
-			button5 = (Button) findViewById(R.id.button5);
-	 
-			button5.setOnClickListener(new OnClickListener() {
-	 
-				@Override
-				public void onClick(View arg0) {
-	 
-				    Intent intent = new Intent(context, AvailableTickets.class);
-	                startActivity(intent);
-	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
-	 
-				}
-	 
-			});
-	 
-		}
-		
-		public void addListenerOnButton6() {
-			 	
-			final Context context = this;
-			
-			button6 = (Button) findViewById(R.id.button6);
-	 
-			button6.setOnClickListener(new OnClickListener() {
 	 
 				@Override
 				public void onClick(View arg0) {
@@ -242,18 +153,39 @@ public class MainMenu extends Activity {
 	 
 		}
 		
-		public void addListenerOnButton7() {
+		public void addListenerOnButton3() {
 			 
 			final Context context = this;
 	 
-			button7 = (Button) findViewById(R.id.button7);
+			button3 = (Button) findViewById(R.id.button3);
 	 
-			button7.setOnClickListener(new OnClickListener() {
+			button3.setOnClickListener(new OnClickListener() {
 	 
 				@Override
 				public void onClick(View arg0) {
 	 
-				    Intent intent = new Intent(context, AddTicketsOffline.class);
+				    Intent intent = new Intent(context, OfflineTicketHistory.class);
+	                startActivity(intent);
+	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
+	 
+				}
+	 
+			});
+	 
+		}
+		
+		public void addListenerOnButton4() {
+			 
+			final Context context = this;
+	 
+			button4 = (Button) findViewById(R.id.button4);
+	 
+			button4.setOnClickListener(new OnClickListener() {
+	 
+				@Override
+				public void onClick(View arg0) {
+	 
+				    Intent intent = new Intent(context, OfflineAvailableTickets.class);
 	                startActivity(intent);
 	                overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
 	 
