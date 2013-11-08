@@ -43,24 +43,39 @@
                     android:id="@+id/button1"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Get Data"
+                    android:text="Online Mode"
                     android:textColor="@color/white"
                     android:layout_weight="1" />
             </TableRow>
 
             <TableRow
                 android:id="@+id/tableRow2"
-               android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
+               	android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="20dp" >
 
                 <Button
                     android:id="@+id/button2"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Validate"
+                    android:text="Offline Mode"
                     android:layout_weight="1"
                     android:textColor="@color/white" />
             </TableRow>
+            
+            <TableRow
+	                android:id="@+id/tableRow3"
+	               android:layout_width="fill_parent"
+	                android:layout_height="fill_parent" >
+	
+	                <Button
+	                    android:id="@+id/button3"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:text="Set Bus Id"
+	                    android:layout_weight="1"
+	                    android:textColor="@color/white" />
+	            </TableRow>
             
            
         </TableLayout>

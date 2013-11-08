@@ -56,7 +56,18 @@
 	                android:layout_weight="1"
 	                android:gravity="center"
 	                android:minWidth="50dp"
-	                android:text="User ID"
+	                android:text="User"
+	                android:textColor="@color/white"
+	                android:textStyle="bold" />
+	            
+	            <TextView
+	                android:id="@+id/textView3"
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:gravity="center"
+	                android:minWidth="50dp"
+	                android:text="Timestamp"
 	                android:textColor="@color/white"
 	                android:textStyle="bold" />
 	        </TableRow>

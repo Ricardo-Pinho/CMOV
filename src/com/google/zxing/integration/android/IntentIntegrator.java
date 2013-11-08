@@ -245,6 +245,7 @@ public class IntentIntegrator {
   public final AlertDialog initiateScan(Collection<String> desiredBarcodeFormats) {
     Intent intentScan = new Intent(BS_PACKAGE + ".SCAN");
     intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+    intentScan.putExtra("ENCODE_SHOW_CONTENTS", false);
 
     // check which types of codes to scan for
     if (desiredBarcodeFormats != null) {
@@ -257,6 +258,7 @@ public class IntentIntegrator {
         joinedByComma.append(format);
       }
       intentScan.putExtra("SCAN_FORMATS", joinedByComma.toString());
+      //intentScan.putExtra("ENCODE_SHOW_CONTENTS", false);
     }
 
     String targetAppPackage = findTargetAppPackage(intentScan);
@@ -377,6 +379,7 @@ public class IntentIntegrator {
     intent.setAction(BS_PACKAGE + ".ENCODE");
     intent.putExtra("ENCODE_TYPE", type);
     intent.putExtra("ENCODE_DATA", text);
+    intent.putExtra("ENCODE_SHOW_CONTENTS", false);
     String targetAppPackage = findTargetAppPackage(intent);
     if (targetAppPackage == null) {
       return showDownloadDialog();

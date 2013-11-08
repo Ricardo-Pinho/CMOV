@@ -20,6 +20,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
+import org.joda.time.Minutes;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,33 +49,69 @@ import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
-public class Validate extends Activity {
+public class ValidateOffline extends Activity {
 	
 		private ProgressDialog pd;
 		private TableLayout tb;
 		
-		private String UserId="0";
-		private String Type="T3", Id="0";
+		private String UserId="0", Id="0";
+		private String Type="T3", Nickname="";
 		private Calendar ValidatedTime = Calendar.getInstance();
 		private IntentIntegrator intentI = new IntentIntegrator(this);
 		private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
 		
 		public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 			IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+			final Context context = this;
 			if (scanResult != null) {
 			      if(scanResult.getContents() != null)
 			          {
 			      	  	  String aux = scanResult.getContents();
 			      	  	  String[] trunc = aux.split(";");
-			      	  	  Id= trunc[0];
+			      	  	  Id = trunc[0];
 					      UserId = trunc[1];
 					      Type = "T" + trunc[2];
 					      ValidatedTime=Calendar.getInstance();
+					      Nickname=trunc[4];
 						    try {
 								ValidatedTime.setTime(sdf.parse(trunc[3]));
 							} catch (ParseException e) {
 								Log.d("Error", "Error parsing Validation Date.");
-								e.printStackTrace();
+								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+										context);
+						 
+									// set title
+									alertDialogBuilder.setTitle("Error");
+						 
+									// set dialog message
+									alertDialogBuilder
+										.setMessage("Something went wrong. Please try again.")
+										.setCancelable(false);
+						 
+										// create alert dialog
+										AlertDialog alertDialog = alertDialogBuilder.create();
+										
+									MediaPlayer mp = MediaPlayer.create(ValidateOffline.this, R.raw.error);
+				                    mp.setOnCompletionListener(new OnCompletionListener() {
+
+				                        @Override
+				                        public void onCompletion(MediaPlayer mp) {
+				                            mp.release();
+				                        }
+
+				                    });   
+				                    mp.start();
+										// show it
+										alertDialog.show();
+										final AlertDialog dlg = alertDialog;
+						                final Timer t = new Timer();
+						                t.schedule(new TimerTask() {
+						                    public void run() {
+						                    	dlg.cancel();
+						                        t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+						            			intentI.initiateScan();
+						                    }
+						                }, 1000); // after 2 second (or 2000 miliseconds), the task will be active.
 							}
 			          }
 			      else
@@ -85,12 +122,10 @@ public class Validate extends Activity {
 					    return;
 			          }
 			}
-			final Context context = this;
 			
 			AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 				int response=-1;
-				String time="";
-				JSONArray arrayResponse;
+				int time=-1;
 				@Override
 				protected void onPreExecute() {
 					pd = new ProgressDialog(context);
@@ -104,48 +139,37 @@ public class Validate extends Activity {
 				@Override
 				protected Void doInBackground(Void... arg0) {
 					try {
-						String payload = "Error";
-				        HttpURLConnection con = null;
-				        try {
-				          // RESTful URL for POST
-				          String link = MainActivity.serverip+"Tickets/TerminalValidate/" + MainActivity.key;
-				          URL url = new URL(link);
-
-				          con = (HttpURLConnection) url.openConnection();
-				          con.setReadTimeout(10000);      
-				          con.setConnectTimeout(15000);   
-				          con.setRequestMethod("POST");
-				          con.setDoOutput(true);
-				          con.setDoInput(true);
-				          con.setRequestProperty("Content-Type", "application/json");
-
-				          payload = "{\"UserId\":\"" + UserId + "\",\"Type\":\"" + Type + "\", \"BusId\":" + Integer.toString(MainActivity.BusId) +"}";
-				          OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
-				          writer.write(payload, 0, payload.length());
-				          writer.close();
-				          con.connect();
-				          BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8" ));
-				          payload = reader.readLine();
-				          reader.close();
-				        }
-				        catch (IOException e) {
-				        	return null;
-				        }
-				        finally {
-				          if (con != null)
-				            con.disconnect();
-				        }
-				        final String p = payload;
-				        String[] trunc =  p.split(";");
-				        response=Integer.valueOf(trunc[0]);
-				        time = trunc[1];
+						
+						for(int i =0 ; i<MainActivity.validatedTickets.size();i++)
+						{
+							if(MainActivity.validatedTickets.get(i).UserId.equals(UserId))
+								{
+									response=-2;
+									Calendar currdate= Calendar.getInstance();
+									DateTime dtime1 = new DateTime(currdate);
+									DateTime dtime2 = new DateTime(MainActivity.validatedTickets.get(i).ValidatedTime);
+									if(MainActivity.validatedTickets.get(i).Type.equals("T1"))
+										time = 15 - Minutes.minutesBetween(dtime2,dtime1).getMinutes();
+									else if(MainActivity.validatedTickets.get(i).Type.equals("T2"))
+										time = 30 - Minutes.minutesBetween(dtime2,dtime1).getMinutes();
+									else
+										time = 60 - Minutes.minutesBetween(dtime2,dtime1).getMinutes();
+									break;
+								}
+						}
 				        Calendar currentDate = Calendar.getInstance();
 				        DateTime dtime1 = new DateTime(currentDate);
     					DateTime dtime2 = new DateTime(ValidatedTime);
     					int diff = Hours.hoursBetween(dtime2, dtime1).getHours();
     					if(diff!=0)
     					{
-    						response=-4;
+    						response=-3;
+    					}
+    					if(response==-1)
+    					{
+    						Tickets newticket = new Tickets(Id, MainActivity.BusId, ValidatedTime, Type, UserId, Nickname);
+    						MainActivity.validatedTickets.add(newticket);
+    						response=1;
     					}
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -176,7 +200,7 @@ public class Validate extends Activity {
 										// create alert dialog
 										AlertDialog alertDialog = alertDialogBuilder.create();
 										
-									MediaPlayer mp = MediaPlayer.create(Validate.this, R.raw.error);
+									MediaPlayer mp = MediaPlayer.create(ValidateOffline.this, R.raw.error);
 				                    mp.setOnCompletionListener(new OnCompletionListener() {
 
 				                        @Override
@@ -205,17 +229,14 @@ public class Validate extends Activity {
 										context);
 						 
 									// set title
-									alertDialogBuilder.setTitle("Error");
+									alertDialogBuilder.setTitle("Success");
 						 
 									// set dialog message
 									alertDialogBuilder
-										.setMessage("You do not have tickets of this type.")
+										.setMessage("You Have Already Validated a Ticket. You still have "+time+" more minutes.")
 										.setCancelable(false);
-						 
-										// create alert dialog
-										AlertDialog alertDialog = alertDialogBuilder.create();
 									
-									MediaPlayer mp = MediaPlayer.create(Validate.this, R.raw.error);
+									MediaPlayer mp = MediaPlayer.create(ValidateOffline.this, R.raw.validate);
 				                    mp.setOnCompletionListener(new OnCompletionListener() {
 
 				                        @Override
@@ -225,6 +246,8 @@ public class Validate extends Activity {
 
 				                    });   
 				                    mp.start();
+										// create alert dialog
+										AlertDialog alertDialog = alertDialogBuilder.create();
 						 
 										// show it
 										alertDialog.show();
@@ -245,45 +268,6 @@ public class Validate extends Activity {
 										context);
 						 
 									// set title
-									alertDialogBuilder.setTitle("Success");
-						 
-									// set dialog message
-									alertDialogBuilder
-										.setMessage("You Have Already Validated a Ticket. You still have "+time+" more minutes.")
-										.setCancelable(false);
-									
-									MediaPlayer mp = MediaPlayer.create(Validate.this, R.raw.validate);
-				                    mp.setOnCompletionListener(new OnCompletionListener() {
-
-				                        @Override
-				                        public void onCompletion(MediaPlayer mp) {
-				                            mp.release();
-				                        }
-
-				                    });   
-				                    mp.start();
-										// create alert dialog
-										AlertDialog alertDialog = alertDialogBuilder.create();
-						 
-										// show it
-										alertDialog.show();
-										final AlertDialog dlg = alertDialog;
-						                final Timer t = new Timer();
-						                t.schedule(new TimerTask() {
-						                    public void run() {
-						                    	dlg.cancel();
-						                        t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
-						            			intentI.initiateScan();
-						                    }
-						                }, 1000); // after 2 second (or 2000 miliseconds), the task will be active.
-							}
-							break;
-							case -4:
-							{
-								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-										context);
-						 
-									// set title
 									alertDialogBuilder.setTitle("Error");
 						 
 									// set dialog message
@@ -291,7 +275,7 @@ public class Validate extends Activity {
 										.setMessage("Validation Date mismatch.")
 										.setCancelable(false);
 									
-									MediaPlayer mp = MediaPlayer.create(Validate.this, R.raw.error);
+									MediaPlayer mp = MediaPlayer.create(ValidateOffline.this, R.raw.error);
 				                    mp.setOnCompletionListener(new OnCompletionListener() {
 
 				                        @Override
@@ -327,13 +311,13 @@ public class Validate extends Activity {
 						 
 									// set dialog message
 									alertDialogBuilder
-										.setMessage("Ticket Validated! You Have "+response+" more ticket(s) of this Type.")
+										.setMessage("Ticket Validated!")
 										.setCancelable(false);
 						 
 										// create alert dialog
 										AlertDialog alertDialog = alertDialogBuilder.create();
 										
-									MediaPlayer mp = MediaPlayer.create(Validate.this, R.raw.validate);
+									MediaPlayer mp = MediaPlayer.create(ValidateOffline.this, R.raw.validate);
 				                    mp.setOnCompletionListener(new OnCompletionListener() {
 
 				                        @Override

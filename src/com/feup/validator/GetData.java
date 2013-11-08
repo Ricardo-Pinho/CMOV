@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.feup.validator.R;
@@ -65,7 +66,7 @@ public class GetData extends Activity {
 				        try {
 
 				          // Build RESTful query (GET)
-				          URL url = new URL(MainActivity.serverip+"Tickets/GetTickets/" + MainActivity.key);
+				          URL url = new URL(MainActivity.serverip+"Tickets/GetTickets/" + Integer.toString(MainActivity.BusId) + "/" + MainActivity.key);
 
 				          con = (HttpURLConnection) url.openConnection();
 				          con.setReadTimeout(10000);
@@ -152,13 +153,17 @@ public class GetData extends Activity {
 									
 									LayoutParams tp = new LayoutParams(0,LayoutParams.WRAP_CONTENT);
 									tp.weight=1;
-									int id = 0;
+									String id = "0";
 									String Type="";
-									int userid=0;
+									String Nickname="";
+									String Date="";
+									String userid="0";
 							        try {
-										id = jsonObject.getInt("Id");
+										id = jsonObject.getString("Id");
 										Type = jsonObject.getString("Type");
-										userid=jsonObject.getInt("UserId");
+										userid=jsonObject.getString("UserId");
+										Nickname=jsonObject.getString("Username");
+										Date=jsonObject.getString("ValidatedTime");
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
@@ -169,7 +174,7 @@ public class GetData extends Activity {
 									Id.setLayoutParams(tp);
 									Id.setTextColor(Color.WHITE);
 									Id.setGravity(Gravity.CENTER);
-									Id.setText(Integer.toString(id));
+									Id.setText(id);
 							        TextView type = new TextView(GetData.this);
 							        type.setLayoutParams(tp);
 							        type.setTextColor(Color.WHITE);
@@ -179,12 +184,19 @@ public class GetData extends Activity {
 							        user.setLayoutParams(tp);
 							        user.setTextColor(Color.WHITE);
 							        user.setGravity(Gravity.CENTER);
-									user.setText(Integer.toString(userid));
+									user.setText(userid+"("+Nickname+")");
+									TextView usedtime = new TextView(GetData.this);
+									usedtime.setLayoutParams(tp);
+							        usedtime.setTextColor(Color.WHITE);
+							        usedtime.setGravity(Gravity.CENTER);
+							        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
+							        usedtime.setText(Date);
 									//Tickets newticket = new Tickets(id, Type, userid);
 									//MainActivity.validatedTickets.add(newticket);
 									tr.addView(Id);
 									tr.addView(type);
 									tr.addView(user);
+									tr.addView(usedtime);
 									tb.addView(tr, i+1);
 								}
 							}

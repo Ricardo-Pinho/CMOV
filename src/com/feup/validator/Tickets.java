@@ -1,37 +1,41 @@
 package com.feup.validator;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class Tickets {
-	public int Id;
-	public int BusId, UserId;
-	public Date ValidatedTime;
-	public String Type;
+	public String Id, UserId;
+	public int BusId;
+	public Calendar ValidatedTime;
+	public String Type, Nickname;
 	
 	public Tickets()
 	{
-		Id=-1;
+		Id="-1";
 		BusId=-1;
-		ValidatedTime= new Date();
+		ValidatedTime= Calendar.getInstance();
 		Type="Error";
+		Nickname="Error";
+		UserId="-1";
 	}
 	
-	public Tickets(int Id, int BusId, Date ValidatedTime, String Type, int UserId)
+	public Tickets(String Id, int BusId, Calendar ValidatedTime, String Type, String UserId, String Nickname)
 	{
 		this.Id=Id;
 		this.BusId=BusId;
 		this.ValidatedTime= ValidatedTime;
 		this.Type=Type;
 		this.UserId=UserId;
+		this.Nickname = Nickname;
 	}
 	
-	public Tickets(int Id, String Type, int UserId)
+	public Tickets(String Id, String Type, String UserId, String Nickname)
 	{
 		this.Id=Id;
 		this.BusId=-1;
-		this.ValidatedTime= new Date();
+		this.ValidatedTime= Calendar.getInstance();
 		this.Type=Type;
 		this.UserId=UserId;
+		this.Nickname = Nickname;
 	}
 	
 	

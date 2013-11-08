@@ -30,6 +30,26 @@
             android:label="@string/app_name" 
             android:name="Validate" >
         </activity>
+        
+        <activity 
+            android:label="@string/app_name" 
+            android:name="OfflineMenu" >
+        </activity>
+        
+        <activity 
+            android:label="@string/app_name" 
+            android:name="OnlineMenu" >
+        </activity>
+        
+        <activity 
+            android:label="@string/app_name" 
+            android:name="GetDataOffline" >
+        </activity>
+        
+        <activity 
+            android:label="@string/app_name" 
+            android:name="ValidateOffline" >
+        </activity>
     </application>
 
 </manifest>
